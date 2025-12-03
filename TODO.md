@@ -27,7 +27,7 @@
         - https://github.com/overleaf/overleaf
         - https://github.com/overleaf/toolkit
         - https://code.visualstudio.com/docs/devcontainers/containers
-1. Utilities: latexxmk (https://github.com/cgraumann/LatexUtils), luatex, formatter and linter (https://github.com/cmhughes/latexindent.pl), spellchecker and grammatical analysis in form of CI/CD (e.g., https://github.com/yegor256/latex-best-practices, gnu aspell, llm, etc.)
+1. Utilities: latexxmk (https://github.com/cgraumann/LatexUtils), luatex (https://tex.stackexchange.com/questions/377613/solve-unicode-char-is-not-set-up-for-use-with-latex-without-special-handling-o), formatter and linter (https://github.com/cmhughes/latexindent.pl), spellchecker and grammatical analysis in form of CI/CD (e.g., https://github.com/yegor256/latex-best-practices, gnu aspell, llm, etc.)
 1. Publish .pdf as github releases (for initial draft, опубликованная версия, и редактированнные в последствии)
 1. На основе этих наработок сделать generic latex template for research paper and other things.
 1. Также добавить beamer шаблон (presentation.tex)
