@@ -1,0 +1,204 @@
+\documentclass{beamer}
+\usepackage[backend=biber,style=numeric, citestyle=ieee]{biblatex}
+\addbibresource{references.bib}
+\graphicspath{{./figures/}}
+\setbeamerfont{caption}{size=\tiny}
+\setbeamertemplate{caption}[numbered]
+
+\titlegraphic{\includegraphics[width=3cm]{aitu_logo.png}}
+\title{Customizable in-depth analysis of software within isolated computational environments to secure critical IT infrastructures}
+\author{Noyan Tendikov, 242710@astanait.edu.kz}
+\institute{Astana IT University, School of Intelligent Systems}
+\date{2025}
+
+\begin{document}
+
+\frame{\titlepage}
+
+\begin{frame}
+\frametitle{Table of Contents}
+\tableofcontents
+\end{frame}
+
+\section{Introduction}
+\begin{frame}
+\frametitle{Introduction}
+\begin{itemize}
+    \item Modern cyber conflicts within an intensified arms race between multiple different actors, such as government agencies, armies, corporations, and private groups.
+    \item Under these circumstances, ensuring security is only a continuous process, not an absolute guarantee.
+    \item Associated risks for critical IT infrastructure.
+\end{itemize}
+\begin{block}{Research goal and objectives}
+Construct security measures for the IT infrastructure, emphasizing the process of collecting and accounting of its internal resources or components for reliability and early insider threat prevention.
+\end{block}
+\end{frame}
+
+\section{Literature review}
+\begin{frame}
+\frametitle{Literature review \newline A. Historical development of IT infrastructure}
+The computing ecosystem and its service models have evolved gradually becoming increasingly commercialized to meet customer demands and scaling issues, as broadly represented in Figure 1.
+\begin{figure}
+    \centering
+    \includegraphics[width=0.9\linewidth]{figure_1.png}
+    \caption{Developmental milestones of computing environments (VM – virtual machine; C – container; PaaS, IaaS, SaaS – external services; 1 – mainframe; 2 – cluster of servers; 3 – geographically distributed servers with virtualization; 4 – hybrid approach with cloud services)}
+    \label{fig:figure_1}
+\end{figure}
+\end{frame}
+\begin{frame}
+\frametitle{Literature review \newline B. Complexity management in IT infrastructure with codification and modeling}
+\begin{columns}
+\column{0.5\textwidth}
+\begin{itemize}
+    \item As IT infrastructure has expanded with its complexity.
+    \item Codification established the paradigm of Infrastructure-as-Code (IaC) to provide maintenance by means of self-documenting code.
+    \item For example, containerization tools like Docker use Dockerfiles, as shown in Figure 2.
+\end{itemize}
+\column{0.5\textwidth}
+\begin{figure}
+    \centering
+    \includegraphics[width=1.0\linewidth]{figure_2.png}
+    \caption{Processes of applying changes to servers  (1 – manually; 2 – via IaC pipeline as a self-documenting system)}
+    \label{fig:figure_2}
+\end{figure}
+\end{columns}
+\end{frame}
+\begin{frame}
+\frametitle{Literature review \newline C. Software supply chain management and attacks}
+\begin{itemize}
+    \item OWASP identified 10 major risks for IT infrastructure in which 5 of them are directly related to IT resources accounting \cite{noauthor_owaspwww-project-top-10-infrastructure-security-risks_2025}
+    \item According to statistics of the European Cyber Security Organisation (ECSO), solution-specific logic often represents about 10\% of code while the remainder is third-party dependencies \cite{noauthor_ecso-wg6-technical-paper--software-supply-chain-security_nodate}.
+    \item As demonstrated in Figure 3, OS (operating system) can be illustration of complex system requiring correct operation of its components providing emergent qualities.
+\end{itemize}
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\linewidth]{figure_3.png}
+    \caption{System components}
+    \label{fig:figure_3}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{Literature review \newline C. Software supply chain management and attacks}
+\begin{itemize}
+    \item Supply chain attack - any risks and failures in a single link can cause a cascading effect across the entire chain, as shown in Figure 4.
+    \item The software market increasingly demonstrates a disregard for formal regulatory mechanisms.
+\end{itemize}
+\begin{figure}
+    \centering
+    \includegraphics[width=0.7\linewidth]{figure_4.png}
+    \caption{Simplified example of the global supply chain in the IT context}
+    \label{fig:figure_4}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{Literature review \newline C. Software supply chain management and attacks}
+Software composition analysis (SCA) is a structured approach for collecting and accounting software components, defining common specifications (e.g., software bill of materials) and governance principles. General limitations of current SCA:
+\begin{itemize}
+    \item gathering reliable data from software is challenging;
+    \item the amount of supply chain vulnerabilities and incidents continue to increase;
+    \item focusing more on static analysis rather than on dynamic analysis during runtime execution;
+    \item not secure by design as they operate within the local environment instead of isolated or remote setups;
+    \item comprehensive deep scanning of transitive dependencies is often missing;
+    \item insufficient integration with smart and data analytics-based systems.
+\end{itemize}
+\end{frame}
+
+\section{Methodology}
+\begin{frame}
+\frametitle{Methodology \newline A. Concept and paradigm shift}
+\begin{itemize}
+    \item Adapting principles from existing malware and binary analysis tools, such as sandboxes, as illustrated in Figure 5.
+    \item Sandbox and automated malware analysis enable examination of software within isolated, reproducible execution environments with custom scripted scenarios,thereby revealing hidden during runtime.
+\end{itemize}
+\begin{figure}
+    \centering
+    \includegraphics[width=0.8\linewidth]{figure_5.png}
+    \caption{Paradigm shift by applying malware and binary analysis for SCA-related tasks}
+    \label{fig:figure_5}
+\end{figure}
+\end{frame}
+\begin{frame}
+\frametitle{Methodology \newline B. System modeling}
+Firstly, the driving side represents the system’s entry points, as clearly shown in Figure 6.
+\begin{figure}
+    \centering
+    \includegraphics[width=0.7\linewidth]{figure_6.png}
+    \caption{Driving side of the architecture}
+    \label{fig:figure_6}
+\end{figure}
+\end{frame}
+\begin{frame}
+\frametitle{Methodology \newline B. System modeling}
+\begin{columns}
+\column{0.5\textwidth}
+\begin{footnotesize}
+Secondly, the application is designed as a modular monolith, as illustrated in Figure 7.
+\begin{itemize}
+    \item “Identity provider, user and session management” – maintains all information about users in the platform with their metadata.
+    \item “Groups and project system” – holds multiple analyses in which users can collaborate with each other.
+    \item “Moderation system” and “Administration system” – are intended for platform operators.
+    \item “Analysis system” – is a critical component for software analysis.
+\end{itemize}
+\end{footnotesize}
+\column{0.5\textwidth}
+\begin{figure}
+    \centering
+    \includegraphics[width=0.7\linewidth]{figure_7.png}
+    \caption{Internal application components of the architecture}
+    \label{fig:figure_7}
+\end{figure}
+\end{columns}    
+\end{frame}
+\begin{frame}
+\frametitle{Methodology \newline B. System modeling}
+\begin{columns}
+\column{0.5\textwidth}
+\begin{tiny}
+\begin{itemize}
+    \item Orchestrator — is responsible for task queuing, scheduling, and overall management operations.In this context, Orchestrator interacts with the Bundle abstraction rather than directly with its individual components, which contains a set of predefined task executors as described below.
+    \item Instancer (i.e., Provisioner) – creates, prepares, and manages the required environments (e.g., containers, VMs, specific OS or images, etc.).
+    \item Collector (i.e., Extractor) – continuously or periodically collects data from created instance (e.g., logs, files, making image screenshots or recording videos, memory or disk snapshots, etc.).
+    \item Interactor – performs predefined set of actions or scripted scenarios in the isolated environment to simulate user behavior and trigger malware responses (e.g., interaction with file system, managing input/output devices, etc.).
+    \item Parser – transforms the required data into a unified format, such as an intermediate representation (IR), or converts it into a format suitable for Analyzer. 
+    \item Analyzer – produces specific verdicts or predictions based on the received data (e.g., performing other specialized analyses using both stochastic and deterministic algorithms).
+\end{itemize}
+\end{tiny}
+\column{0.5\textwidth}
+\begin{figure}
+    \centering
+    \includegraphics[width=0.9\linewidth]{figure_8.png}
+    \caption{Internal application components of the architecture}
+    \label{fig:figure_8}
+\end{figure}
+\end{columns}
+\end{frame}
+\begin{frame}
+\frametitle{Methodology \newline B. System modeling}
+\begin{figure}
+    \centering
+    \includegraphics[width=0.7\linewidth]{figure_9.png}
+    \caption{Driven side of the architecture}
+    \label{fig:figure_9}
+\end{figure}
+\end{frame}
+
+\section{Results and Conclusion}
+\begin{frame}
+\frametitle{Results and Conclusion}
+\begin{footnotesize}
+\begin{itemize}
+    \item It was decided to keep the Parser and Analyzer separate to ensure better decomposition; however, merging them into a single entity could improve performance and efficiency.
+    \item To reduce the load and prevent bottlenecks on a single Orchestrator, multiple instances of the Engine should be deployed, or the system should run in a concurrent or parallel mode.
+    \item It was decided to group task executors into a single Bundle, as these components were found to be highly interdependent.
+    \item The topic of supply chain management in IT infrastructure remains highly relevant, as the number of related incidents continues to grow despite the emergence of new tools and standards.
+    \item Future research will focus on converting the proposed methodology into a microservice-based system, which remains a challenging task due to its complexity and management requirements. However, such an approach would enable scalability and continuous integration of new functionality without interrupting the platform. Further work will also include a full implementation of the system and an independent statistical analysis of software dependencies beyond those examined in the current literature review.
+\end{itemize}
+\end{footnotesize}
+\end{frame}
+
+\begin{frame}
+\printbibliography
+\end{frame}
+
+\end{document}

@@ -1,4 +1,4 @@
-% General styles and packages: (@TODO: move preamble to separate file)
+% General styles and packages:
 \documentclass[conference, comsoc]{IEEEtran}
 \usepackage[utf8]{inputenc}
 \IEEEoverridecommandlockouts
@@ -8,19 +8,40 @@
 \usepackage{textcomp}
 \usepackage{xcolor}
 \usepackage{comment}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{verbatim}
+\usepackage{listings}
 \usepackage[none]{hyphenat} % turn off hyphenation
-\setlength{\parindent}{0pt} % no space between paragraphs
-\graphicspath{{figures/}} % default path for figures
+\setlength{\parskip}{0pt}   % no vertical space between paragraphs
+\graphicspath{{figures/}}   % default path for figures
 
-% References: (@TODO: migrate to bibtex because IEEETran has not fully correct styling for biblatex)
+% Code listing styles:
+\lstdefinestyle{code_style}{ 
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,
+    breaklines=true,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=4,
+    language=Python,
+    frame=single,
+    postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space} % @TODO: edit to gray color
+}
+\lstset{style=code_style}
+
+% References (IEEE bibliography styles and format for biblatex):
 \usepackage[backend=biber, style=ieee, sorting=none, url=false]{biblatex}
 \addbibresource{references.bib}
-%% IEEE bibliography styles for biblatex:
 \renewcommand*{\bibfont}{\footnotesize}
 \setlength{\biblabelsep}{\labelsep}
 \setlength{\bibitemsep}{\IEEEbibitemsep}
 
-% Heading: (@TODO: \usepackage{fancyhdr})
+% Heading:
 \makeatletter
 \def\ps@IEEEtitlepagestyle{
   \def\@oddhead{\parbox{\textwidth}{
@@ -41,7 +62,21 @@
 Astana, Kazakhstan \\
 242710@astanait.edu.kz \\
 ORCID: 0009-0009-7251-8830}
-} % @TODO: add rzaeva and lishnevsky to authors?
+}
+\author{\IEEEauthorblockN{2\textsuperscript{nd} Leila Rzayeva}
+\IEEEauthorblockA{\textit{School of Cybersecurity} \\
+\textit{Astana IT University}\\
+Astana, Kazakhstan \\
+l.rzayeva@astanait.edu.kz \\
+ORCID: 0000-0002-3382-4685}
+}
+\author{\IEEEauthorblockN{3\textsuperscript{rd} Rostyslav Lisnevskyi}
+\IEEEauthorblockA{\textit{School of Cybersecurity} \\
+\textit{Astana IT University}\\
+Astana, Kazakhstan \\
+rostyslav.lisnevskyi@astanait.edu.kz \\
+ORCID: 0000-0002-9006-6366}
+}
 
 \maketitle
 
@@ -55,7 +90,6 @@ software supply chain; infrastructure-as-code; critical IT infrastructure; softw
 
 \section{Introduction}
 % @TODO: Refine introduction to be whole page without and more solid (цельным повестованием as flow)
-% @TODO: Add more details about research goal, hypotheses, research questions, scope of the work, brief details about previous works in this field of research, emphasize on new advances, theories and/or applications and include an analysis of results and findings
 
 % subpart: current sutation about escalation of conflicts that affect on cybersecurity of critical infrastructures
 Modern cyber conflicts have escalated into a condition of constant cyberwar, driven by countless threats. Unlike traditional military conflicts, this warfare is taking place within a digital space and often goes unnoticed by the general public due to their lack of awareness and competence \cite{almeidaComparativeAnalysisEUbased2025}. The current policy of major states is dictated by the principle of "peace through strength", prioritizing the rule of power over ethical considerations and international law. It leads to an intensified arms race between multiple actors, such as government agencies, armies, corporations, and private groups. Under these circumstances of ongoing confrontations between defenders and attackers, ensuring security is only a continuous process rather than an absolute guarantee \cite{safitraCounterattackingCyberThreats2023}. So, the industry of information technology (IT) should be engaged in systematic risk assessment and apply reactive patches as problems emerge, because the number of potential threats and vulnerabilities is inherently unknown and cannot be fully identified or eliminated in upfront. Moreover, the increasing rate of automation and digitalization exposes associated risks for critical infrastructure, where their compromise could create dangerous situations and collateral damage for citizens \cite[pp. 1--2]{nationalinstituteofstandardsandtechnologyFrameworkImprovingCritical2018}. For example, the Cybersecurity and Infrastructure Security Agency (CISA) of the USA adopted a classification that identifies 16 critical infrastructure sectors \cite[pp. 6--7]{InfrastructureResiliencePlanning}, including the context of IT infrastructures. This sector is composed from corresponding services and assets (e.g., maintenance personnel, electricity, networks, equipment, hardware, software), providing an operational basis or computational environment to utilize for information systems (IS) \cite{qatawnehMediatingRoleTechnological2024}.
@@ -64,6 +98,7 @@ Modern cyber conflicts have escalated into a condition of constant cyberwar, dri
 Fundamentally, attacks targeting critical IT infrastructure are driven by diverse motives and reasons, overlapping with other industries \cite{lehtoCyberattacksCriticalInfrastructure2022}. Historical events have already shown that conflicts of national interests might trigger a security breach on highly protected facilities (e.g., nuclear power plants) \cite{makrakisIndustrialCriticalInfrastructure2021}. For instance, Riggs et al. examined statistics on global cyberattacks against critical infrastructures since 2006 and developed a prediction model that shows exponential growth of incidents with the military sector being the most frequently targeted \cite{riggsImpactVulnerabilitiesMitigation2023}. Another factor that may escalate the situation is the growing trend around generative artificial intelligence (AI), which increases the demand on data centers, stimulating competitors and other third parties to compromise or abuse that computational power for their own benefit \cite{yigitCriticalInfrastructureProtection2024}. Additionally, the increasing interconnectivity of IS, especially through Internet of Things (IoT) devices, causes fragility by exposing multiple points of failure and allows malicious actors or even device manufacturers to gain remote access to them \cite{vardakisReviewSmarthomeSecurity2024, rauhalaPhysicalWeaponizationSmartphone2022}.
 
 % subpart: research goal and structure of the study
+% @TODO: Add more details about research goal, hypotheses, research questions, scope of the work, brief details about previous works in this field of research, emphasize on new advances, theories and/or applications and include an analysis of results and findings
 Therefore, this study attempts to construct security measures for the IT infrastructure, emphasizing the process of collecting and accounting of its internal resources or components for reliability and early insider threat prevention. Firstly, the literature review covers the historical development of IT infrastructure, complexity management, and issues with software composition. Secondly, the methodology specifies the hypotheses and provides a framework for conducting customizable analyses within sandboxed environments. Thirdly, the results part examines features of the proposed solution. Lastly, the conclusion summarizes findings and potential drafts for future work.
 
 \section{Literature review}
@@ -94,12 +129,12 @@ IaC operations are managed by system administrators, DevOps teams (Development a
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=1.0\linewidth]{figure_2}
-    \caption{Processes of applying changes to servers: (1) Manually. (2) IaC pipeline as a self-documenting system.}
+    \caption{Processes of applying changes to servers: (1) Manually. (2) Via IaC pipeline as a self-documenting system.}
     \label{fig:self_documenting_system}
 \end{figure}
 
 % subpart: secure coding practices for IaC configurations
-Any IaC code should be proceeded through the continuous integration and continuous delivery (CI/CD) pipeline, which maintains safe deployment by runtime verification tests within simulated conditions for dynamic analysis and automated scans with validation checks of the codebase for static analysis \cite[pp. 9--10]{ECSOWG6TechnicalPaperSoftwareSupplyChainSecurity}. According to Saavedra et al., incorporating intermediate representation (IR) and source-to-source translation into IaC static analysis facilitates the development of language-agnostic methods that can be ported to any IaC format \cite{saavedraPolyglotCodeSmell2023}. So, IT specialists emphasize that IaC codebases should be maintained in accordance with secure coding standards on a regular basis (e.g., ISO/IEC series, NIST frameworks, etc.) \cite{konalaFrameworkMeasuringQuality2025}. 
+Any IaC file should be proceeded through the continuous integration and continuous delivery (CI/CD) pipeline, which maintains safe deployment by runtime verification tests within simulated conditions for dynamic analysis and automated scans with validation checks of the codebase for static analysis \cite[pp. 9--10]{ECSOWG6TechnicalPaperSoftwareSupplyChainSecurity}. According to Saavedra et al., incorporating intermediate representation (IR) and source-to-source translation into IaC static analysis facilitates the development of language-agnostic methods that can be ported to any IaC format \cite{saavedraPolyglotCodeSmell2023}. So, IT specialists emphasize that IaC codebases should be maintained in accordance with secure coding standards on a regular basis (e.g., ISO/IEC series, NIST frameworks, etc.) \cite{konalaFrameworkMeasuringQuality2025}.
 
 % subpart: visual IaC and other formats of information representation
 Sandobalin et al. examined the advisability of using IaC modeling tools by training control groups on Argon and Ansible \cite{sandobalinEffectivenessToolsSupport2020}. The research showed that Argon, as a visual toolkit, is easier to learn and can abstract complexity as a thin layer above existing IaC configuration formats. Thus, allowing users to simply draw their IT architecture, while the underlying system automatically generates a specific configuration for deployment. It implies that complexity management and computational thinking also extend to graphical and other representations of information. Diagrams and visualizations provide two-dimensional or multidimensional representations, enabling more structured modes of reasoning, whereas text is inherently a linear representation of information. Certainly, these forms should not be regarded as mutually exclusive, rather they synergize with each other and are interchangeable at different levels of abstraction. 
@@ -108,27 +143,30 @@ Sandobalin et al. examined the advisability of using IaC modeling tools by train
 In this regard, Model Driven Engineering (MDE) methodology proposes treating documentation, specifications, and model definitions as primary and reference artifacts describing behavior and components of a system, from which code generation toolkits can facilitate transformation between them (e.g., into source code templates in any programming language or pseudocode) in order to achieve synchronization \cite{verbruggenPractitionersExperiencesModeldriven2023}. Firstly, it bridges the gap between developers and business-oriented specialists by demonstrating certain domain-specific problems and rules, so they can focus more on business logic. For instance, Alfonso et al. developed the BESSER platform based on MDE, which provides a canvas editor and multiple design notations like UML (Unified Modeling Language) for generating backend applications from diagrams \cite{alfonsoBuildingBESSEROpensource2024}. Such toolkits usually support the development of reliable prototypes and concepts, but it is not intended for high-load or performance-critical systems. Secondly, MDE allows structures to dynamically adapt to emerging requirements instead of manually rewriting boilerplate code and thinking about platform-specific implementations, so the development process is optimized. For example, it is applicable for automatic propagation of components changes and migration between layers instead of repetitive manual transformations, conversions, and modifications \cite{chillonPropagatingSchemaChanges}. Additionally, AI in the form of language models enables rapid code generation from specifications as detailed prompts and instructions \cite{diroccoUseLargeLanguage2025, stoicaSpecificationsMissingLink2024}. Although generative language models can cause challenges due to hallucinations and their stochastic nature, it might be partially mitigated through enforcing strict rules, validation mechanisms, and multiple series of output refinements \cite{shankarWhoValidatesValidators2024}.
 
 \subsection{Resource management and accounting}
-% @TODO: extract more valuable information from given references (sabettaKnownVulnerabilitiesOpen2024, SharedVisionSoftware, jaatunSoftwareBillMaterials2023) in order to extend this part
-
 % subpart: IT resource accounting and dependencies in complex systems
-OWASP (the Open Worldwide Application Security Project) identified 10 major risks for IT infrastructure which 5 of them are directly related to IT resources accounting \cite{OWASPWwwprojecttop10infrastructuresecurityrisks2025}: "Outdated Software", "Insufficient Threat Detection", "Insecure Resource and User Management", "Insecure Access to Resources and Management Components", "Insufficient Asset Management and Documentation". This fact clearly emphasizes that proper management of all system components and organizational knowledge is mandatory. In this context, software composition analysis (SCA) is a structured approach for collecting and accounting software components, defining common specifications and governance principles \cite{sabettaKnownVulnerabilitiesOpen2024}. It facilitated the establishment of a widely adopted format for software bill of materials (SBOM) with its multiple variations that allows to reduce a total vulnerability response time \cite{SharedVisionSoftware, jaatunSoftwareBillMaterials2023}. Other progressive solutions can assist in the same task by collecting data from a running production instance to subsequently generate recreatable configurations and identical images/snapshots \cite{kleinInfrastructureCodeFinal}. Usually, such procedures are combined with version control systems that store and track versions of all project files, allowing teams to have: process of collaborative development, a single source of truth, and well-defined compliance by localizing areas of responsibility \cite{ragavanVersionControlSystems2021}. Particularly, connections and links between system components form "dependencies" which have direct and indirect involvement on certain functionalities and qualities of base system. As demonstrated in Figure \ref{fig:components_of_complex_system}, OS (operating system) can be illustration of complex system requiring correct operation of its components providing emergent qualities.
+% @TODO: Extract more valuable information from given references (sabettaKnownVulnerabilitiesOpen2024, SharedVisionSoftware, jaatunSoftwareBillMaterials2023) in order to extend this part
+% @TODO: Instead of writing "Other progressive solutions", mention in more details what kleinInfrastructureCodeFinal have done in their research with attribution to them.
+% @TODO: Change reference ragavanVersionControlSystems2021 to some another (find some general reviews about VCS)
+% @TODO: References to owasp cyclonedx, SLSA, etc. and related ecosystem of SCA tools.
+OWASP (the Open Worldwide Application Security Project) identified 10 major risks for IT infrastructure which 5 of them are directly related to IT resources accounting \cite{OWASPWwwprojecttop10infrastructuresecurityrisks2025}: "Outdated Software", "Insufficient Threat Detection", "Insecure Resource and User Management", "Insecure Access to Resources and Management Components", "Insufficient Asset Management and Documentation". This fact clearly emphasizes that proper management of all system components and organizational knowledge is mandatory. In this context, there is already a structured approach for collecting and accounting software components, such as software composition analysis (SCA), which defines common specifications and governance principles \cite{sabettaKnownVulnerabilitiesOpen2024}. It facilitated the establishment of a widely adopted format for software bill of materials (SBOM) with its multiple variations that allows to reduce a total vulnerability response time \cite{SharedVisionSoftware, jaatunSoftwareBillMaterials2023}. Other progressive solutions can assist in the same task by collecting data from a running production instance to subsequently generate recreatable configurations and identical images/snapshots \cite{kleinInfrastructureCodeFinal}. Usually, such procedures are combined with version control systems that store and track versions of all project files, allowing teams to have: process of collaborative development, a single source of truth, and well-defined compliance by localizing areas of responsibility \cite{ragavanVersionControlSystems2021}. Particularly, connections and links between system components form "dependencies" which have direct and indirect involvement on certain functionalities and qualities of base system. As demonstrated in Figure \ref{fig:components_of_complex_system}, OS (operating system) can be illustration of complex system that requires correct operation of its components providing emergent qualities.
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=1.0\linewidth]{figure_3}
-    \caption{Components of a complex system.}
+    \caption{An abstract complex system that is consisted of multiple underlying operational components.}
     \label{fig:components_of_complex_system}
 \end{figure}
 
 % subpart: third-party dependencies and example of ecosystems
-According to statistics of the European Cyber Security Organisation (ECSO), solution-specific logic often represents only about 10\% or less of an application's total code, while the remainder is largely made up of third-party dependencies such as software (module, package, library), service (requests to external systems and network API), infrastructure (like drivers and underlying execution platform) \cite[p. 8]{ECSOWG6TechnicalPaperSoftwareSupplyChainSecurity}. Given a script in the Python programming language, the internal dependency in this case is the self-contained code, while the external dependency is everything that was created by third-party such as implementation of standard library, interpreter/compiler, specification, OS or platform-specific requirements, and so on, as shown on Figure \ref{fig:python_ecosystem_from_perspective_of_dependencies}.
+According to statistics of the European Cyber Security Organisation (ECSO), solution-specific logic often represents only about 10\% or less of an application's total code, while the remainder is largely made up of third-party dependencies such as software (module, package, library), service (requests to external systems and network API), infrastructure (like drivers and execution platform) \cite[p. 8]{ECSOWG6TechnicalPaperSoftwareSupplyChainSecurity}. Given a script in the Python programming language, the internal dependency in this case is the self-contained code, while the external dependency is everything that was created by third-party such as implementation of standard library, interpreter/compiler, specification, OS or platform-specific requirements, and so on, as shown on Figure \ref{fig:python_ecosystem_from_perspective_of_dependencies}.
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=1.0\linewidth]{figure_4}
-    \caption{Ecosystem of Python programming language from perspective of dependencies. Adapted from \cite[p. 8]{ECSOWG6TechnicalPaperSoftwareSupplyChainSecurity}.}
+    \caption{Ecosystem of Python programming language from the perspective of dependencies. Adapted from \cite[p. 8]{ECSOWG6TechnicalPaperSoftwareSupplyChainSecurity}.}
     \label{fig:python_ecosystem_from_perspective_of_dependencies}
 \end{figure}
 
 % subpart: service-oriented economy that formed global supply chain in IT
+% @TODO: Expand this part and add references about global supply chain and how it is generally different in software side
 From a broader perspective, the modern economy is service-oriented and highly interconnected in the global supply chain, where everyone relies on each other, as represented in Figure \ref{fig:example_of_global_supply_chain}. Hence, engineers can mitigate issues of resource constraints (e.g., schedule, personnel, risks, requirements, finance, and qualifications) by integrating external dependencies and reusing code as outsourcing for common problems during the implementation and maintenance of IT products.
 \begin{figure}[htbp]
     \centering
@@ -137,51 +175,92 @@ From a broader perspective, the modern economy is service-oriented and highly in
     \label{fig:example_of_global_supply_chain}
 \end{figure}
 
-\subsection{Compromise and trust} 
-% @TODO: edit this section and extend it with (algorithms, tables, figures) and translate to academic english
-% @TODO: write more details to already created bullet points with detailed explanation
-% @TODO: нужны примеры supply chain attack инцидентов в виде таблицы с перечислением (насколько увеличились в динамике и т.д.)
-% @TODO: reference to constraint satisfaction problem, dependency theory, and similarity to game rules / game theory
-% @TODO: reference for dependency management approaches (automatic and manual) with real examples
-% @TODO: extract more details from given references
-% @TODO: "aidenbergTrulyProtectVirtualizationBased2022" переписать что такой-то такой то автор приводит примеры обхода анализа and extract more details (такой же референс переиспользовать Results)
-
+\subsection{Compromise and trust. Security posture of IT infrastructure.}
 % subpart: supply chain attacks and dependency theory
+% @TODO: Add references to constraint satisfaction problem, dependency theory, and its similarity to game rules / game theory
+% @TODO: Add reference for dependency management approaches (automatic and manual) with real world examples
+% @TODO: Examples of major supply chain attack incidents in table and linear graph with amount of them to understand dynamics of change. Even unusual attack vectors of supply chain attacks and malware via game mods (roblox, gmod, minecraft)
 On the other hand, any risks and failures in a single link can cause a cascading effect across the entire chain which is known as a supply chain attack. This attack vector exposes the ability to implicitly or explicitly influence on any IT infrastructure by leveraging direct and indirect (i.e., transitive) dependencies, invoking instability and fragility \cite{themitrecorporationSupplyChainCompromise2025}. It can be caused by any potential way of external influence, including unintentional flaws and defects, intentional threats like malicious software (malware), or destabilizing factors like breaking API changes and internal modifications \cite{okaforSoKAnalysisSoftware2022}. Inadequately governed dependency practices within a team can increase the system's exposure to software supply chain attacks. Accordingly, it is necessary to be familiar with various approaches to dependency management, such as:
 \begin{itemize}
-    \item Manual ("vendoring") - by copying an external dependency directly into the codebase in order to maintain and modify it manually.
+    \item Manual ("vendoring") - by copying an external dependency directly into the codebase in order to maintain and modify it independently.
     \item Automatic - dependency/package managers as seperate software system that is responsible for retrieving, handling, updating, and executing additional lifecycle operations on project dependencies.
 \end{itemize}
-These techniques might be combined together with build specification files (e.g., CMake, Make, Setuptools). Although some practicioners argue that the manual approach provides a more detailed understanding of dependency contents (source and distributions) and greater control (updating only explicitly), both of them are equally susceptible to supply chain attacks due to propagation of transitive dependencies. Consequently, dependencies that are not explicitly pinned should not be relied upon, since they may disappear or be replaced within the direct dependencies from which they originate. Adversaries actively exploit such kind of characteristics and behaviors. For example, someone can abuse identity confusion by impersonating as existing packages (via name similarity, description, or other metadata), claiming unregistered package names, and performing additional actions intended to mislead tools or users \cite{shradhaBeyondTypeSquatting291044}. Therefore, it is essential to understand the underlying mechanisms such as dependency resolution and their metadata parsing. From theoretical standpoint, dependency resolution is a variation on the topic of the constraint satisfaction problem where the objective is to satifsy a predefined set of conditions and rules. It is proven to be an NP-hard problem for which no optimal solution exists, meaning that constructing the dependency tree or graph becomes increasingly complex with each additional dependency and constraint (version requirements or other ecosystem-specific rules), as illustrated in Figure \ref{fig:dependency_theory}.
+These techniques might be combined together with build specification files (e.g., CMake, Make, Setuptools). Although some practicioners argue that the manual approach provides a more detailed understanding of dependency contents (source and distributions) and greater control (updating only explicitly), both of them are equally susceptible to supply chain attacks due to propagation of transitive dependencies. Consequently, dependencies that are not explicitly pinned should not be relied upon, since they may disappear or be replaced within the direct dependencies from which they originate. Adversaries actively exploit such kind of characteristics and behaviors. For example, someone can abuse identity confusion by impersonating as existing packages (via name similarity, description, or other metadata), claiming unregistered package names, and performing additional actions intended to mislead tools or users \cite{shradhaBeyondTypeSquatting291044}. Therefore, it is essential to understand the underlying mechanisms such as dependency resolution and their metadata parsing. From theoretical standpoint, dependency resolution is a variation on the topic of the constraint satisfaction problem where the objective is to satisfy a predefined set of conditions and rules. It is proven to be an NP-hard problem for which no optimal solution exists, meaning that constructing the dependency tree or graph becomes increasingly complex with each additional dependency and constraint (version requirements or other ecosystem-specific rules), as illustrated in Figure \ref{fig:dependency_theory}.
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=1.0\linewidth]{figure_6}
     \caption{Dependency theory: (1) Version constraints that restrict the allowable range of package versions from the initial published version to the latest one according to the versioning format. Such versions basically represent a variation of the same entity. (2) Dependency groups (concept from set theory) which delimit or expand the number of required packages, because some components can be mandatory while others remain optional. (3) and (4) Nested dependency graph (concept from graph theory) with direct and transitive ones. In real projects, the number of dependencies and constraints is significantly larger, leading to dependency conflicts ("dependency hell") characterized by cross-references, circular or recursive relations, loops, duplicates, and similar pathological structures. These situations might be resolved, for example, by flattening the dependency tree into a more linear structure.}
     \label{fig:dependency_theory}
 \end{figure}
-
 \begin{comment}
-% TODO: на самом деле алгоритм не ограничивывается этим и есть различные варианты to solve dependency resolution и представить в других формата и вариациях
-% TODO: оформить как https://en.wikibooks.org/wiki/LaTeX/Algorithms
-% TODO: pseudocode for resolving dependencies and backtracking, handle RecursionError
-% TODO: references
+@TODO: Add in-text reference to fig:dependency_resolution to text about right after fig:dependency_theory. For example, "One of the well-known or widely applied dependency resolution algorithm is backtracking, which is indicated in Figure \ref{dependency_resolution}".
+@TODO: Add visual line breaks and wrapping, so code listing is not outside of column boundary.
+@TODO: Convert to abstract algorithm instead of Python code by using "algorithmic" package instead of "listing" (https://tex.stackexchange.com/questions/128723/algorithm-as-figure-and-without-italic-and-bold-formatting).
+@TODO: Seperate algorithms to subfigures: backtracking algorithm and dependency resolution with parsing.
+@TODO: Add doctests and unittests to all code listings as form of literate programming and examples how code really works.
+@TODO: Edit algorithms in figure "dependency resolution with parsing" according to provided references to be correct with reality:
 - https://github.com/pypa/pip/tree/36987b0c31b97ffb9fb7949ded628e9a6b10c016/src/pip/_vendor/resolvelib
 - https://pip.pypa.io/en/stable/topics/dependency-resolution/
 - https://pip.pypa.io/en/stable/topics/more-dependency-resolution/
-Выстраивание полного дерева зависимостей, разобрав работу “uv tree” и похожих инструментов для того чтобы понять как получить данные обо всех зависимостях (базовый алгоритм dependency resolving)
-- устанавливаем определенную зависимость (e.g., matplotlib с указанием версии или условий этой версии)
-- зависимость находится в переходном состоянии, пока не будет закреплена (“freezed”, “pinned”) и установлена
-- для закрепления необходимо провести dependency resolution of dependency graph
-    - найти все зависимости данной зависимости (прямые зависимости)
-    - у каждой зависимости этой зависимости есть зависимости ниже и так далее (транзитивные зависимости)
-    - но при такой рекурсивной проходке возникают dependency / circular dependency (когда одна зависимость зависит от другой или есть конфликт по определённым требованиям). Есть множество решений данной проблемы: дублировать скачиваемые зависимости но с другими версиями и условиями, и т.д.
-    - К примеру, matplotlib имеет pillow в прямых зависимостях, но в свою очередь pillow имеет ещё множество зависимостей и так далее рекурсивно…
-    - В идеале, хотелось бы дойти вглубь до кода который существует без зависимостей (внешних библиотек или установки), но это невозможно практически учитывая что есть stdlib python или libc которые тоже формально зависимости. Также надо учитывать, что есть зависимости которые не отмечены в pypi но они формально являются зависимостями (обертки над кодом C библиотек или кодов из другой экосистемы)
-% TODO: упрощенный алгоритм парсинга dependencies (поиск всех файлов с requirements and всех зависимостей вниз но это не резолвинг сам по себе а лишь парсинг)
+- https://docs.astral.sh/uv/reference/internals/resolver/
+- https://docs.astral.sh/uv/concepts/resolution/
+@TODO: Add all steps of dependency management pipeline to pseudocode listing:
+1. Set some dependency (e.g., matplotlib with version specifier and other requirements).
+2. Dependency is under "transition state" if it is not pinned ("freezed") and downloaded.
+3. In order to pin exact dependency, we have to do dependency resolution of dependency graph:
+    - Step 1. Parse already specified direct dependencies in requirements.txt file.
+    - Step 2. Find all dependencies of direct dependencies (transitive dependencies from direct dependencies).
+    - Step 3. Continue Step 2. in recursive way if there is no errors and dependency conflicts/hell (e.g., circular dependency).
+    - Note 1. Issues in Step 3. can be mitigated by different approaches: duplicating downloading dependencies but with other versions and requirements (e.g., like npm does).
+    - Note 2. It is worth to consider that there are dependencies that is not mentioned in PyPI because they are internal components of some wrappers and belongs to other ecosystems (e.g., wrapper around C library). Therefore, we should go deeper and identify all possible dependencies until non-dependent code/components to "solid foundation" (basic libc, os-specific dependencies, drivers, stdlib in programming language ecosystem, etc.).
+\begin{figure}[htbp]
+    \centering
+    \begin{lstlisting}
+from typing import TypedDict
+
+class Constraint(TypedDict):
+    version: str # need to be parsed
+    ... # can be other constrains and rules
+    # (e.g., everything except specific package name and date)
+
+class Package(TypedDict):
+    name: str # or identity in any other form (e.g., unique id)
+    constraints: List[Constraint]
+
+def resolve_dependencies(packages: list[Package]) -> Value | Error:
+    """Resolve dependencies in software packages"""
+    # Value - resolved tree/graph
+
+    # TODO: states and assumptions (from previous call)
+    # TODO: handle RecursionError
+    # TOOD: merge Constraint and Package to Requirement (or not?)
+    if not packages:
+        raise ValueError("should be at least one direct package")
+    if not isinstance(packages, list):
+        raise TypeError("should be a list type")
+    for package in packages: # package by package (one by one)
+        if not package.constrains: # is empty
+            # giving default assumption (latest)
+        # ...
+        # for constraint in package.constraints:
+            # try to satisfy it
+
+# Other variant to represent it:
+def resolve_dependencies(packages: List[Package]) -> ResolvedTree | Error:
+    where :...
+
+    do_backtracking():
+        assumption = change_according_to_last_call()
+        resolve_dependencies(...)
+
+    \end{lstlisting}
+    \caption{Dependency resolution and parsing.}
+    \label{fig:dependency_resolution}
+\end{figure}
 \end{comment}
 
 % subpart: convenience/usability vs security (functional vs non-functional requirements)
-% TODO: add reference about "distribution formats and categories"
+% @TODO: Add reference about "distribution formats and categories" and extend this part with more that proofs that "functionality over security" is wrong
 Many software repositories prioritise functionality over security, often justifying this by claiming that they do not wish to restrict access for a community that is "open for everyone", mistakenly assuming that security represents an unnecessary overhead \cite{sasseDebunkingSecurityUsabilityTradeoff2016}. As a result, they expose themselves and others to the risk that anyone may maliciously influence ecosystems. So, users are left to manage the external chaos on their own. Moreover, existing market solutions cannot be regarded as definitive protections against supply chain attacks, as obtaining reliable data about software remains challenging due to its various distribution formats and categories:
 \begin{itemize}
     \item white box - fully known content (e.g., open source);
@@ -190,7 +269,8 @@ Many software repositories prioritise functionality over security, often justify
 \end{itemize}
 
 % subpart: software composition analysis and other form of data gathering
-For example, SCA tools typically focuse only on white box, gathering already indexed vulnerabilities or components, thereby leaving critical gaps in threat visibility and transparency. This is understandable, since other categories are inherently more complex due to specifics, because many companies use anti-analysis techniques to protect their software and intellectual property, making component-level inspection difficult or reasonably impossible \cite{zaidenbergTrulyProtectVirtualizationBased2022}. Despite rising SCA adoption by developers, multiple researchers indicate that supply chain vulnerabilities and incidents continue to increase, and the remediation process often remains slow \cite{senDeterminantsSoftwareVulnerability2020, jafariDependencyPracticesVulnerability2023}. Moreover, Alfadel et al. found that, in the Python ecosystem, it takes a median of up to 4 months to fix all occurrences of a security vulnerability in the PyPI repository \cite{alfadelEmpiricalAnalysisSecurity2021}. Experts also identify several additional drawbacks and limitations of existing SCA tools \cite{dietrichSecurityBlindSpots2023, enckTopFiveChallenges2022, bohmeSoftwareSecurityAnalysis2025}:
+% @TODO: "aidenbergTrulyProtectVirtualizationBased2022" переписать что такой-то такой то автор приводит примеры обхода анализа and extract more details (такой же референс переиспользовать еще в другом месте)
+General SCA tools typically focuse only on white box, gathering already indexed vulnerabilities or components, thereby leaving critical gaps in threat visibility and transparency. This is understandable, since other categories are inherently more complex due to their specifics, because many companies use anti-analysis techniques to protect such software and intellectual property, making component-level inspection difficult or reasonably impossible \cite{zaidenbergTrulyProtectVirtualizationBased2022}. Despite rising SCA adoption by developers, multiple researchers indicate that supply chain vulnerabilities and incidents continue to increase, and the remediation process often remains slow \cite{senDeterminantsSoftwareVulnerability2020, jafariDependencyPracticesVulnerability2023}. Moreover, Alfadel et al. found that, in the Python ecosystem, it takes a median of up to 4 months to fix all occurrences of a security vulnerability in the PyPI repository \cite{alfadelEmpiricalAnalysisSecurity2021}. Experts also identify several additional drawbacks and limitations of existing SCA tools \cite{dietrichSecurityBlindSpots2023, enckTopFiveChallenges2022, bohmeSoftwareSecurityAnalysis2025}:
 \begin{itemize}
     \item focusing more on static analysis rather than on dynamic analysis during runtime execution;
     \item they operate within the local environment instead of isolated or remote setups;
@@ -198,81 +278,100 @@ For example, SCA tools typically focuse only on white box, gathering already ind
     \item insufficient integration with AI and data analytics-based systems.
 \end{itemize}
 
-% subpart: changing the status quo
-% @TODO: добавить референс на Bug Bounty систему также - платить комьюнити за поиск багов для "выстраивание системы модерации"
-% @TODO: add reference for "secure by default", "call down", "mandatory oversight"
-The fragmented software ecosystem worsens this situation, making accountability for the many packages and their adherence to standards unclear. Even software package that is trusted by the community cannot offer proper guarantees, because mainstream software licenses clearly mention that their products are distributed "as is" condition \cite{wintersgillLawDoesntWork2024}. Experts propose different solutions for the current status quo, ranging from weak to radical measures. Firstly, there should be an introduction of increased mandatory and strict basic requirements (baselines) at the platform level with compliance from end user side. This could reduce the number of attacks and malicious code due to high standards and improved quality. It also reflects the principle of "secure by default", where secure policies and good default configurations should become the common for many, and not just the exception reserved for professionals:
+% subpart: changing the status quo and rethinking software ecosystems
+% @TODO: add reference for "secure by default", "call down", "mandatory oversight" and expand bullet-point list with more ideas/content.
+% @TODO: add reference to high fragmentation according to stats from https://repology.org/
+% @TODO: объяснение для software licenses что они имеют малую юридическую силу и ничем не закреплены (де-юре может быть но де-факто это не так и много кто нарушает их в скрытую). Также пример с графом зависимостей у проектов (то что транзитивные зависимости могут иметь конфликтующие лицензии по сравнению с главной зависимостью и тогда в чем ценность лицензий вовсе). Также пример texlive и plantuml где зоопарк конфликтующих лицензий как фантиков от конфет. Additional explanation from me before: "software licenses в целом это формальность которая юридически не обоснованна. также если еще посмотреть по транзитивным зависимостям то там вылезит куча конфликтующих зависимостей"
+The fragmented software ecosystem worsens this situation, making accountability for the many packages and their adherence to standards unclear \cite{enablingGlobalCollaboration}. For instance, Mirakhorli et al. reviewed 84 available SBOM management toolkits across multiple programming language ecosystems, which demonstrates the lack of unification and significant fragmentation in current solutions \cite{mirakhorliLandscapeStudyOpen2024}. Even software package that is trusted by the community cannot offer proper guarantees, because mainstream software licenses clearly mention that their products are distributed "as is" condition \cite{wintersgillLawDoesntWork2024}. Experts propose different solutions for the current status quo, ranging from weak to radical measures. Firstly, there should be an introduction of increased mandatory and strict basic requirements (baselines) at the platform level with compliance from end user side. This could reduce the number of attacks and malicious code due to high standards and improved quality. It also reflects the principle of "secure by default", where secure policies and good default configurations should become the common for many, and not just the exception reserved for professionals:
 \begin{itemize}
-    \item Mandatory oversight and analysis before package publication and subsequently with every update/change.
-    \item Establishment of a moderation system where the community will naturally report and react to appearance of malicious packages.
-    \item Policies for temporary blocking or issuing "call down" periods between user actions during anomalous activity (e.g., IP address change, password or specific token renewal, recent publications, and so on).
+    \item Mandatory oversight and analysis before package publication and subsequently with every update/change. For example, establishment of a moderation system where the community will naturally report and react to appearance of malicious packages. Such movements as bug bounty programs can provide payment to the community for finding bugs to establish natural vulnerability research and embrace ethical hacking over illegal activities. \cite{bozziniRegimesEthicalHacking2025}. Also, there is a productive case within Astana IT University where they regularly implement CTF (Capture The Flag) and Cyberpolygons to train security engineers, thereby validating skills and preparing professional specialists for organizations \cite{abdiramanComparativeAnalysisApplication2023}.
+    \item Policies for temporary blocking or issuing "call down" periods between user actions during anomalous activity (e.g., IP address change, password or specific token renewal, recent publications, and so on). % @TODO: references
+    \item Movement towards slowing down of overproduction and starting to "recycle waste" by rethinking old or abandoned ideas (re-evaluating them, finding patterns, and recognizing repetition). Perhaps, developers should also strive to regularly improve the standard library and make it better with "batteries included" in the official distribution. Otherwise, its position will be taken by many competing dependencies covering the exact same specific topic, thereby generating a high degree of entropy. % @TODO: references
+    \item Designing systems in a way that they are "secure by design" in their foundation means that security and safety are built-in initially rather than being an additional element. This approach dictates that engineers strive to place security and features at least on the same level of value during the development process. It eliminates specific categories of vulnerabilities, restricts/limits malware, and forms a multilayered security / defense-in-depth approach \cite{mellMeasuringImprovingEffectiveness2016}. % @TODO: add reference "secure by demand" before mellMeasuringImprovingEffectiveness2016
+    \item Next-generation and future-proof system that are comprehensive to the extent that they can self-analyze and self-improve, making them more reliable and less fragile. For instance, Berhe et al. showed that companies are compelled to have a mitigation plan and a regular budget for automated software dependency recovery or manual actions such as replacing it with alternatives, upgrading it, or reverting to a previous release \cite{berheMaintenanceCostSoftware2023}. Ideally, this issues could be mitigated by well-decomposed systems that might still continue to function in such critical cases or have internal recovery mechanisms ("self-healing") for the failure of individual components only up to a certain limit \cite{dehrajReviewArchitectureModels2021}.
 \end{itemize}
 
 % subpart: regulations, hidden malware (Ken Thompson's hack), distinction between design and implementation, old model of trust (trusted/semi-trusted/untrusted)
 % @TODO: add reference to https://arxiv.org/pdf/1803.07244 and to programming language model of execution (C++ abstract machine)
-Secondly, the software market should pay more attention and show greater concern for formal regulatory mechanisms to increase trust and responsibility in the community, such as certification, auditing, and transparent processes, along with initiatives aimed at improving standards. Sammak et al. attended an interview among a small subset of experienced developers, which revealed that the majority of respondents are unfamiliar with details of software supply chain management or have a superficial understanding due to the absence of proper training on this topic for a broader audience \cite{sammakDevelopersApproachesSoftware2023}. Thirdly, popular or operation-critical software have a strong influence on whole landscape, so compromising them can undermine not just dependent infrastructure but also the global contracts of security, such as cryptography stack \cite{tsoupidiProtectingCryptographicLibraries2025}. Self-replicating malware or virus might compromise a significant portion of the IT ecosystem by ensuring that any code compiled on an infected hardware platform, compiler, or OS becomes compromised as well \cite{ladisaTaxonomyAttacksOpenSource2022}. This is due to the fact that definition files are merely instructions without guarantees that our intentions will be correctly expressed and transformed with preserved semantics in the produced output (e.g., machine code, process, and other representation) by intermediary system (compiler, interpreter, execution environment), as shown in Figure \ref{fig:design_and_implementation}.
+Secondly, the software market should pay more attention and show greater concern for formal regulatory mechanisms to increase trust and responsibility in the community, such as certification, auditing, and transparent processes, along with initiatives aimed at improving standards. Sammak et al. attended an interview among a small subset of experienced developers, which revealed that the majority of respondents are unfamiliar with details of software supply chain management or have a superficial understanding due to the absence of proper training on this topic for a broader audience \cite{sammakDevelopersApproachesSoftware2023}. Thirdly, popular or operation-critical software have a strong influence on whole landscape, so compromising them can undermine not just dependent infrastructure but also the global contracts of security, such as cryptography stack \cite{tsoupidiProtectingCryptographicLibraries2025}. For example, self-replicating malware or virus might compromise a significant portion of the IT ecosystem by ensuring that any code compiled on an infected hardware platform, compiler, or OS becomes compromised as well \cite{ladisaTaxonomyAttacksOpenSource2022}. This is due to the fact that definition files are merely instructions without guarantees that our intentions will be correctly expressed and transformed with preserved semantics in the produced output (e.g., machine code, process, and other representation) by intermediary system (compiler, interpreter, execution environment), as shown in Figure \ref{fig:design_and_implementation}.
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=1.0\linewidth]{figure_7}
     \caption{Intermediary system between design and implementation.}
     \label{fig:design_and_implementation}
 \end{figure}
-Furthermore, conducting a compromise assessment or software evaluation for the produced product is complicated, because infected reverse engineering tools (e.g., debugger, decompiler, disassembler) or even their clean versions running in a compromised environment might hide the infected parts and backdoors as blind spots in the software in order to remain undetected. Due to the high stakes, it is crucial to determine whom to trust and based on what principles to minimize such risks beforehand. Researchers Singer and Bishop propose viewing trust in the form of a relationship model that makes us vulnerable because we rely and depend on a third party without any doubt due to assumptions and distractions, considering them trustworthy \cite{singerTrustBasedSecurityTrust2020}. They also suggest applying threat modeling and risk analysis before and during the design stage in the development lifecycle to minimize the factor of trust. Hence, trust should not be considered as a static and accurate indicator, but rather it is a dynamic probability of being trusted by someone else and vice 
+Furthermore, conducting a compromise assessment or software evaluation for the produced product is complicated, because infected reverse engineering tools (e.g., debugger, decompiler, disassembler) or even their clean versions running in a compromised environment might hide the infected parts and backdoors as blind spots in the software in order to remain undetected. Due to the high stakes, it is crucial to determine whom to trust and based on what principles to minimize such risks beforehand. Researchers Singer and Bishop propose viewing trust in the form of a relationship model that makes us vulnerable because we rely and depend on a third party without any doubt due to assumptions and distractions, considering them trustworthy \cite{singerTrustBasedSecurityTrust2020}. It means that our inherit tolerance to possible flaws/mistakes due to the factor of trust affects on our cybersecurity posture. They also suggest applying threat modeling and risk analysis before and during the design stage in the development lifecycle to minimize the factor of trust. Hence, trust should not be considered as a static and accurate indicator, but rather it is a dynamic probability of being trusted by someone else and vice 
 versa, where any mistake from both parties leads to its loss. For example, one of the parties (recipient or sender) can at any time disrupt data transmission and its correctness by intentionally beginning not to adhere to the given standard protocols and interaction interfaces.
 
-% subpart: zero trust as theory and in blockchain
-FFor these reasons, the National Institute of Standards and Technology (NIST) developed the concept of Zero Trust Architecture (ZTA), in which trust requires continuous verification \cite{roseZeroTrustArchitecture2020}. Babenko et al. clearly demonstrated that empirical data on ZTA implementation correlates with a lower incident rate of insider threats \cite{babenkoCybersecuritylevelAssessmentModels}. Organizations can adopt this by following the key principles listed below:
+% subpart: zero trust as theory and in practice (e.g., blockchain)
+For these reasons, the National Institute of Standards and Technology (NIST) developed the concept of Zero Trust Architecture (ZTA), in which trust requires continuous verification \cite{roseZeroTrustArchitecture2020}. Babenko et al. clearly demonstrated that empirical data on ZTA implementation correlates with a lower incident rate of insider threats \cite{babenkoCybersecuritylevelAssessmentModels}. Organizations can adopt this by following the key principles listed below:
 \begin{itemize}
-    \item Continuous evaluation of all actions and actors instead of granting full access within a protected perimeter. This means the environment itself does not affect how we trust someone/something, assuming operating in a hostile environment.
-    \item Eliminating implicit trust in favor of explicit trust using a trust algorithm as a method for verifying access or credibility with transactional properties. % @TODO: cite zerotrust original document that page to "transactional properties"
+    \item Continuous evaluation of all actions and actors instead of granting full access within a protected perimeter. This means the environment itself does not affect how we trust someone/something, assuming operating in a hostile environment. % @TODO: reference to exact part about this from ZTA document 
+    \item Eliminating implicit trust in favor of explicit trust using a trust algorithm as a method for verifying access or credibility with transactional properties \cite[Ch. 3.3]{roseZeroTrustArchitecture2020}.
     \item Segmentation of the network and systems into atomic cells, which theoretically fragments the attack surface (e.g., a large monolith will expose more data than individual microservices) \cite{JourneyZeroTrust}.
-    \item Least privileges of access and minimizing amount of dependencies via strict comprehensive assessments of vendors or suppliers \cite{collierZeroTrustSupply2021}. % @TODO: add reference leeDoDEnterpriseDevSecOps where "collierZeroTrustSupply2021"
-    \item Security as a dynamic process and adaptive system achieved through the continuous collection and analysis of data/statistics (resources, assets, incidents, etc.). % @TODO: также референс на explainable AI и контекст анализа данных в ZTA \cite{mushtaqSystematicLiteratureReview2025}, changing attack vectors (add reference pourmoafiSolutionSecuringInformation and mengCybersecuritySimondonsConcretization2022)
+    \item Least privileges of access and minimizing amount of dependencies via strict comprehensive assessments of vendors or suppliers \cite{collierZeroTrustSupply2021}. On top of this, it is recommended to apply DevSecOps practices for the automation of software building, testing, and the overall "shift-left" movement for the early identification of problems in IS (Information Security) \cite{leeDoDEnterpriseDevSecOps}.
+    \item Security as a dynamic process and adaptive system achieved through the continuous collection and analysis of data/statistics (resources, assets, incidents, etc.). % @TODO: также референс на explainable AI и контекст анализа данных в ZTA \cite{mushtaqSystematicLiteratureReview2025}, ever changing attack vectors (add reference pourmoafiSolutionSecuringInformation and mengCybersecuritySimondonsConcretization2022)
 \end{itemize}
-One example of ZTA implementation is blockchain systems, which contain zero-knowledge proofs and consensus algorithms such as "proof of something" that guarantees trust based on a defined trust factor (e.g., computational power, number of devices/actors, amount of specific tokens) \cite{banguiWhenTrustlessMeets2024}. Furthermore, there is a concept of "trustless" in the same sphere that futher reinforces ZTA and trust management approaches in distributed systems. Some studies even consider the potential for applying blockchain as a version control system due to its data integrity and non-repudiation characteristics \cite{grilliCombiningGitBlockchain2024}.
-
-% subpart: secure by design and rethinking software ecosystems
-Overall, the IT industry have to slow down and rethink what has already been produced, stopping the overproduction of software and beginning to "recycle waste" (old and abandoned ideas) by re-evaluating them, finding patterns, and recognizing repetition. This is due to the very high fragmentation of software solutions that compete with each other, but fundamentally they solve the exact same problem (e.g., frontend frameworks) \cite{enablingGlobalCollaboration}. Mirakhorli et al. reviewed 84 available SBOM management toolkits across multiple programming language ecosystems, which demonstrates the lack of unification and significant fragmentation in current solutions \cite{mirakhorliLandscapeStudyOpen2024}. Perhaps, developers should strive to regularly improve the standard library and make it better with "batteries included" in the official distribution. Otherwise, its position will be taken by many competing dependencies covering the exact same specific topic, thereby generating a high degree of entropy. Additionally, experts suggest designing systems in a way that they are "secure by design" in their foundation, where security and safety are built-in initially rather than being additional elements \begin{comment} @TODO: add reference "secure by demand" \end{comment}. It eliminates specific categories of vulnerabilities and forms a multilayered security / defense-in-depth approach \cite{mellMeasuringImprovingEffectiveness2016}. For instance, Berhe et al. showed the necessity for a mitigation plan and a regular budget on automated dependency recovery or manual actions such as replacing it with alternatives, upgrading it, or reverting to a previous release \cite{berheMaintenanceCostSoftware2023}. If there is considered well-decomposed systems that might still continue to function in such cases, or have recovery mechanisms ("self-healing") for the failure of individual components only up to a certain limit, after which the entire system becomes non-operational or some functionality is temporarily disabled \cite{dehrajReviewArchitectureModels2021}. IT community should strive for such next-generation systems that are comprehensive to the extent that they can self-analyze and self-improve, making them more reliable and less fragile.
+One example of ZTA implementation is blockchain systems, which contain zero-knowledge proofs and consensus algorithms such as "proof of work" and others that guarantee trust based on a defined trust factor (e.g., computational power, number of devices/actors, amount of specific tokens) \cite{banguiWhenTrustlessMeets2024}. Furthermore, there is a concept of "trustless" in the same sphere that futher reinforces ZTA and trust management approaches in distributed systems. Some studies even consider the potential for applying blockchain as a version control system due to its data integrity and non-repudiation characteristics \cite{grilliCombiningGitBlockchain2024}.
 
 % subpart: conclusion of literature review to understand research gap in current landscape
-% @TODO: расширить эту часть подробнее как подведение итогов and identified research gaps
-There is a practical problem with current industry approaches, requiring immediate innovations. While specifications are important, implementations of toolkits must also meet high-quality standards.
+% @TODO: расширить эту часть подробнее как подведение всех итогов and identified research gaps in current approaches / topic
+Overall, understanding the current problems and limitations provides us with further perspectives for developing the processes of creation, verification, and analysis of the contents of IS and IT infrastructures. Moreover, large or critical incidents will encourage community to consider how to prevent them and fundamentally revise current processes that are recognized as entirely insufficient.
 
-\begin{comment}
 \section{Methodology}
-% add table to literature review (сравнение с другими решениями) and results (анализ рисков).
-% Добавить рефренс про сандбоксинг из NIST zero trust в начало методологию (где говориться про сандбоксы)
-% привести приме как работают элементы других систем прежде чем раскрывать свою
-% Показывает SOTA solutions раскрывая аспекты и характеристики, постепенно вычленяя определенные элементы которые слабо-развитые в его контексте - и постепенно тем самым переходит на методологии за счёт нахождения gaps и предлагает свои решения по этому повод (в конце лит обзора подводит итоги с переходом на методологию)
-% TODO: Принцип работы современных с технической стороны
-% add table to this part and literature review
-% TODO: pseudocode в практической части для своей системы помимо блок-схем
-% TODO: add about virtualization and digital twins (maybe to methodology briefly)
-% TODO: Decompose to more subsections (depending on problem and components not just one large section). Методы (методология исследования) – методы, используемые для проверки гипотезы, должны быть описаны достаточно подробно, чтобы другой исследователь в этой области мог повторить проверку.
-% Перенести все про виртуализацию и digital twins в методологию (concept explanation) типа будет мини лит обзор по этой теме, но в самой диссертации эту часть нужно подробно раскрыть ведь у виртуализации есть свои многие недостатки которые необходимо решить
-% @TODO: refine methodology, results, conclusion
-% comparative analysis, механизмы взаимодействия компонентов, portable/technology-agnostic
-% They are also not an absolute solution, multiple underlying issues with sandbox also
-% @TODO: expand this part and write more structured way
-% Тут также добавить про то что системы будет открытой и любой сможет поучаствовать в развитии проекта в дальнейшем и его философия (что его отличает от конкурентов)
-% добавить алгоритмы вместе с псевдокодом и UML diagrams и т.д. в методологию
-The methodological part focuses on addressing problems and gaps identified in the literature review of the current landscape. A comprehensive lifecycle was developed, accompanied by essential architectural decisions.
+% @TODO: expand this part and decompose to more subsections (depending on problem and components not just one large section). Методы (методология исследования) – методы, используемые для проверки гипотезы, должны быть описаны достаточно подробно, чтобы другой исследователь в этой области мог повторить проверку. Methodology is a design that you are using to answer research questions and research gaps. “I am going to use these techniques and this type of analysis to solve some problem”. Methodology (design, framework, approach) - big umbrella consists of multiple methods underneath (количественный анализ - сбор данных; качественный анализ - what, how, why, where)
 
-\subsection{Concept and paradigm shift}
-It was decided to explore principles from existing malware and binary analysis tools, such as sandboxes. These toolkits can effectively complement modern SCA approaches and enable a paradigm shift, as illustrated in Figure 6. The proposed idea involves redirecting the purpose of existing solutions toward a different target audience and analytical focus from regular end users to developers. Although this may appear to be a minor shift, it is both critical to have and straightforward to integrate.
-% @TODO: need references and examples of such toolkits
-% Тут доп. пояснение про задачу зависимостей (dependency theory and so on). И доп детали нормально что из себя представляет методология и т.д.
-% Такой подход тоже не идеальный и у него есть свои limitations, но позволяет именно искать глубокие зависимости на самом деле а не просто просматривать поверхностно содержание
-\begin{figure}
+\subsection{Proposal concept and paradigm shift}
+% subpart: intro to the paradigm shift with sandboxes for SCA
+% @TODO: references to details of malware analysis (statis and behavioral analysis) principles from word document of fastsandbox (explaning what is malware/binary analysis and how it might be valuable for SCA)
+The methodological part focuses on addressing problems and gaps identified in the literature review of the current landscape, which indicates that a change in the paradigm of perception and understanding (studying, analyzing, and defining) of problematic components in IT infrastructure is necessary, including both malware and legitimate components. Therefore, this study propose to adopt principles from existing malware and binary analysis tools and digital forensics, such as sandboxes and others, which can be integrated into the process of collecting and analyzing components from IT infrastructure. These toolkits can effectively complement modern SCA approaches and enable a paradigm shift, as illustrated in Figure \ref{paradigm_shift}. The proposed idea involves redirecting the purpose of existing solutions toward a different target audience and analytical focus from regular end users to developers. Although this may appear to be a minor shift, it is both critical to have and straightforward to integrate.
+\begin{figure}[htbp]
     \centering
-    \includegraphics[width=1.0\linewidth]{} % figure_6
-    \caption{Paradigm shift by applying malware and binary analysis for SCA-related tasks} % TODO: also about simulations and digital twins
-    \label{fig:placeholder}
+    \includegraphics[width=1.0\linewidth]{figure_8}
+    \caption{Paradigm shift by applying malware and binary analysis for SCA-related tasks.}
+    \label{fig:paradigm_shift}
 \end{figure}
-Sandbox and automated malware analysis enable examination of software within isolated, reproducible execution environments. They also support custom scripted scenarios that emulate developer behavior when interacting with specific libraries or applications (e.g. according to use cases or user stories), thereby revealing hidden during runtime. These tools offer a rich set of functionalities and methodologies that are highly relevant and should be leveraged for advancing software dependency analysis.
 
-\subsection{System modeling}
-The problem domain was decomposed into several subtopics that naturally align with required components and services, ensuring that it remains both extensible and customizable. The architectural design was based on the principles of hexagonal architecture, because it provides a clear separation between supplementary elements and the core business logic, such as driving side, application, and driven side. The model introduces the concept of adapters and ports, borrowed from electronic engineering, which enables the replacement or modification of component implementations. Firstly, the driving side represents the system’s entry points, including human users and external automated systems that interact with the platform through backend APIs and web interfaces over network connections within client-server model, as clearly shown in Figure 7.
+% subpart: expanding this idea of sandboxes to whole digital twins as platform for simulating scenarios
+% @TODO: add more strong proof and general references to this part (про особенности со стороны качества и примеры применения из уже существующиех компаний использовали это и каким образом)
+This approach is validated by NIST for ZTA, where it is recommended to manage software examination within isolated execution environments before allowing to add or change any component into the IT infrastructure \cite[Ch. 3.2.4]{roseZeroTrustArchitecture2020}. However, only passive analysis with sandboxes and honeypots is limited, because security engineers cannot predict some situations due to small subset of analyzed artifacts and insufficient data. Also, the behavior observed in a sandboxed environment is not always representative of the real system. Therefore, organization should strive to simulate the original infrastructure and everything in it to be exactly precise to the production instance in order to obtain more correct and realistic results in general, as demonstrated in Figure \ref{fig:continuous_security}.
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=1.0\linewidth]{figure_9}
+    \caption{Transition to cycle of continuous security (SOC - security operations center; MSSP - managed security service provider): (1) Passive analysis with sandboxes and honeypots. (2) Reactive analysis with digital twins of IT infrastructures.}
+    \label{fig:continuous_security}
+\end{figure}
+
+% @TODO: тут добавить про industrial and physical digital twins и потом сделать уже переход на software/cybersecurity digital twins чтобы была понятна аналогия. "Digital twins можно использовать также для проверки физической защиты предприятия (где можно проникнуть, подключить провод, пролезть, поломать проход, и т.д. на базе 3D модели реального здания или офиса)".
+Full-scale digital twins allow to create copies of specific workstations up to entire large systems as complex real-time simulations. They might significantly reduce the time and cost of testing and validation, making the process truly continuous and assisting to identify critical problems before publication into production. In essence, such an analysis laboratory establishes a validation and feedback loop against constantly expanding attack surfaces, where security specialists can simulate multiple attack scenarios and gather all data from the IT infrastructure. It also provides following features and opportunities:
+\begin{itemize}
+    \item customizable dynamic end-to-end testing, what-if analysis, and chaos engineering;
+    \item supporting digital hygiene via mirrored environment that is restricted and remote;
+    \item regularly deconstructing and reconstructing IT infrastructure;
+    \item emulation and virtualization targeting certain hardware or device architectures;
+    \item and so on.
+\end{itemize}
+
+% -------------------------------------------------------------------------
+% subpart: ai agents and general ai / data-driven solutions in context of digital twins
+% @TODO: citation to https://assets.anthropic.com/m/ec212e6566a0d47/original/Disrupting-the-first-reported-AI-orchestrated-cyber-espionage-campaign.pdf where using generative ai because if we have cheap and easy multiple PoC scripts it is enough to break something instead of creating качественные SOTA solution
+% @TODO: add more explanation and examples of current ai agents or agentic ai state of the art because it is unclear
+Furthermore, AI agents based on multimodal (combination of language, vision, etc.) could be utilized as lightweight pentesters under customizable scripted scenarios
+
+проводить user-подобные взаимодействия (или пропускать целые сценарии в автономном режиме).
+will trigger some hidden aspects of software within some длительный период времени а не короткий. developer behavior when interacting with specific libraries or applications (e.g. according to use cases or user stories), thereby revealing hidden during runtime.
+имитировать сообщества с их паттернами поведения (либо задавать им манеру поведения, инструкции, как натуральный трафик а не просто brute-forcing - smart brute-forcing как делают пользователи находя слабые точки). botnets но для пользы (healthy botnets которые тестирую не на production) а не для вреда (спама, ложных мнений, ддос). пользователей для проверки - можно настроить сколько пользователей будет одновременно, какие фитчи мы хотим проверить. AI более гибкие и поведение их стохастическое как у реальных пользователей.
+
+эту задумку можно можно расширить на другое виды симуляций (реального рынка, событий, игр, распределенных систем, мест, других приложений и т.д.). Using game engines not for games but for simulations (extreme conditions simulations).
+% ---------------------------------------------------------------------------
+
+\subsection{System modeling and mechanisms}
+% @TODO: Принципы работы системы с технической стороны с примерами (алгоритмы, pseudocode, блок-схемы, UML diagrams, comparative analysis, механизмы взаимодействия компонентов, portable/technology-agnostic, и т.д.)
+% @TODO: Принципы работы система на самом деле а не только вспомогательные детали обслуживания и дополнения. microkernel and plugin/modular architecture (and about IPC communications). how orchestrator общается с каждым из элементов из bundle, или оркестратор общается лишь с bundle абстракцией который уже resolving остальное. How someone will became Publisher from Guest and how some one will se published packages (maybe someone can show them in public, and other will be by default in private) - list of analyses. But what if analysis will be too much (типа можно слишком много делать анализов на одни и те же пакеты) - попробовать посмотреть как делается то у merly ai и других систем.
+% Подробное описание собственного решения и по каким принципам каждый элемент работает и для чего - также базовые примеры как это может полезным в реальности (то есть реальные примеры)
+% @TODO: пока что мы разберем предлагаемый части системы которые пока не все и в будущем их будет больше как полноценная экосистем, пока только теоретическое описание и proposal as foundational and technology agnostic (поэтому технические аспекты немного опущены)
+
+The problem domain was decomposed into several subtopics that naturally align with required components and services, ensuring that it remains both extensible and customizable. The architectural design was based on the principles of hexagonal architecture, because it provides a clear separation between supplementary elements and the core business logic, such as driving side, application, and driven side. The model introduces the concept of adapters and ports, borrowed from electronic engineering, which enables the replacement or modification of component implementations. Firstly, the driving side represents the system's entry points, including human users and external automated systems that interact with the platform through backend APIs and web interfaces over network connections within client-server model, as clearly shown in Figure 7.
 \begin{figure}
     \centering
     \includegraphics[width=1.0\linewidth]{figure_7}
@@ -297,12 +396,19 @@ Secondly, the internal part of the application is designed as a modular monolith
 Components can be added, modified, or disabled as needed. This flexibility improves security by reducing the attack surface, minimizing system states, decreasing computational complexity, and factor of combinatorial explosion. The analysis engine also features a plugin and modding system with multiple operating modes. This means that users of the system can develop their own plugins for specific use cases by implementing the provided interface. Such extensibility enables the analysis not only of software packages but also of container images, computer networks, and other parts of IT infrastructure. Furthermore, there is support for fine-grained configuration and operation modes. For example, specifying which data to collect or ignore, potentially through regex-based filtering.
 \begin{figure}
     \centering
-    \includegraphics[width=1.0\linewidth]{figure_9} % Redraw as UML Class diagram short with bundle example for plugin system
+    \includegraphics[width=1.0\linewidth]{figure_9} % @TODO: Redraw as UML Class diagram short with bundle example for plugin system
     \caption{Modification of system}
     \label{fig:placeholder}
 \end{figure}
 
 The analysis engine consists of tightly coupled contextual components, all operating around a common abstraction of “task”:
+\begin{comment}
+Types of task requirements that can be passed to Orchestrator:
+• dependencies/packages 	в форме одной определенной зависимости 	(или группы зависимостей) или проекта 	(или группы проектов на системе контроля 	версий или архивом)
+• microservices 	в форме названия image контейнера, самого 	образа контейнера в виде файла, и т.д.
+• любые 	другие данные / ресурсы / инфраструктура 	которые поддерживает
+система
+\end{comment}
 \begin{itemize}
     \item Orchestrator — is responsible for task queuing, scheduling, and overall management operations. It serves as an intermediate layer that receives tasks directly from the analysis system, each with specific requirements that must be resolved before delegation to other components. At the same time, it manages and coordinates the overall execution process, acting as the central communication and control hub, because components in the Bundle cannot begin execution without confirmation or explicit request from Orchestrator. In this context, Orchestrator interacts with the Bundle abstraction rather than directly with its individual components, which contains a set of predefined task executors as described below. Also, the connection between Orchestrator and Bundle follows a one-to-many relationship, where Orchestrator determines which Bundle to use among several available ones.
     \item Instancer (i.e., Provisioner) – creates, prepares, and manages the required environments (e.g., containers, VMs, specific OS or images, etc.).
@@ -320,13 +426,29 @@ Thirdly, Figure 8 illustrates the components of the driven side along with some 
     \label{fig:placeholder}
 \end{figure}
 
-Overall, the prototype demonstrates a variation that can be implemented independently of specific technologies, making it a technology-agnostic and portable solution. % вместо завершения дальше продолжить и представить алгоритмы
+% вместо завершения дальше продолжить и представить алгоритмы and UML диаграммы
+Overall, the prototype demonstrates a variation that can be implemented independently of specific technologies, making it a technology-agnostic and portable solution.
+% ------------------------------------------------------------------------------
 
 \section{Results}
-% TODO: Результаты – гипотеза должна быть проверена, а данные, представляющие результаты проверки, представлены. (обязательно графики и таблицы с результатами данных). результат это алгоритм, метод, модель, архитектура для статьи и также обоснование
+\begin{comment}
+@TODO: Результаты – гипотеза должна быть проверена, а данные, представляющие результаты проверки, представлены. (обязательно графики и таблицы с результатами данных). результат это алгоритм, метод, модель, архитектура для статьи и также обоснование. Критика системы и недостатков и сравнение с другими альтернативами и то что мы не покрыли в research.
+\end{comment}
+
+% subpart: flaws of digital twins and sandbox approach
+% @TODO: Add reference to ahmedReviewHybridDeep2024 (about side-channel attack) in flaws of sandboxed environments
+% @TODO: уязвимости of ai agents like cross-prompt injection (https://learn.microsoft.com/en-us/windows/security/book/operating-system-agentic-security)
+% @TODO: They are also not an absolute solution, multiple underlying issues with sandbox also (у виртуализации есть свои многие недостатки которые необходимо решить in out of scope of this research). Такой подход тоже не идеальный и у него есть свои limitations, но позволяет именно искать глубокие зависимости на самом деле а не просто просматривать поверхностно содержание (about current SCA).
+Однако есть проблемы что симуляции в целом это лишь модели, они не всегда представляют полную картину мира и поэтому отклоняются от реальность или имеют недочёты. Однако конечно сама виртуализация и эмуляция не идеальные, у них есть проблемы связанные с: они отличаются от реального железа по характеристикам и качественным показателям (реальное физическое устройство будет все равно себя вести по другому и это будут проверять сами злоумышленники чтобы скрывать свое поведение внутри такой песочницы), возможны уязвимости с побегами из изолированного окружения в trusted зоны, или какие-то ещё подходы которые malware применяет для определения нахождения себя в таком искусственном окружении тем самым скрывая свое поведение в нем.
+
+% subpart: malware is complicated (проблемные dependencies and components in insider threat) - возможно ли решить данную задачу анализа malware не решая ее? - корретные, некорректные, нерешаемые и обратные задачи
+сам по себе malware это не конкретно определенное ПО с полностью злыми намерениями, а это любое ПО которое имеет определенный набор характеристик которые мы в свою очередь считаем (выстроили) malware-подобием /  "maliciousness" (может аналогия из биологии что является вредным или безвредным). Задача определения или изучения таких malware samples, поиска malicous behavior или malware-подобности inside in software products is hard как было уже рассказано в лит. обзоре., ведь большинство таких ПО напоминают собой бункер который необходимо проанализировать за счет сбора информации на основе похожих прошлых malware/ситуаций за счет стандартным методов вскрытия файлов.
+- Анализ внутри виртуального окружения тоже не ultimate solution, ведь тот же SEB имеет проверку на что он находится в виртуальном окружении запрещая работу в ней (тут подробнее по каким принципам это работает). И чтобы это обойти придется пересобирать исходник, патчить или дебажить бинарник. Также есть патч на Qemu который подставляет реальные характеристик ПК и маскирует вмку как реальный ПК (github.com/zhaodice/qemu-anti-detection). Но это тоже не стопроцентный обход, ведь надо понимать что железо в ВМ эмулируется и имеет другие КАЧЕСТВЕННЫЕ характеристики не по тому какое крутое железо там с описанием а то КАК оно работает и реагирует на определенные действия. К примеру, некоторые уязвимости обычного железа там не будут проявляться а некоторые собственные будут, а также есть side-channel атаки которые пытаются уже физические свойства железа выявить и эмуляция не сможет гарантировать что они будут похожи на реальное ПО тем самым - так что это вопрос еще не решенный и требует дальнейшего рассмотрения.
+- John McAfee said that current anti-virus model is outdated, ведь многие вирусы не палятся в антивирусных системах. К примеру, VirusTotal далеко не все вирусы охватывает (прогоняет через множество антивирусов и базы вирусов (база yara rules with indicators of compromise). Любой уникальный стелсовый вирус будет долгое время fud для вирустотал с его 70+ антивирусами и его несколькими сандбоксами (виртуальные окружения). Проблема что большинство проверок просто статические. Сандбокс behavioral проверки есть (которые revealing hidden activities/elements/things during runtime), но они фигово определяют в автоматическом режиме. Также есть подходы и механизмы anti-sandboxing, anti-vm, anti-debug которые обходят sandbox. Обычно подозрительные файлы дополнительно проверяются malware analistы но не всегда можно определить (бывают fud - fully undetectable malware). Также некоторые malware могли купить официальные сертификаты from windows и годами лежать undetectable. Очень сложно чекать malware заскриптованный пакером с полиморфизмом/метаморфизмом, вырезанной дебаг информацией, обфускацией строк, добавлением мусорной логики, антидебаггинг. Комментарий от меня - мне кажется, что корень проблемы лежит глубже а текущие подходы для решения и разбора файлов на составляющие и поиска поведения который мы относим к malware-подобному это что-то устарелое. В целом, проблема разбора и анализа malware можно сравнить с распутыванием клубка или поиском иголки в стоге сена. Мы пытаемся найти корневую логики или восстановить ее или ключевые моменты из специально запутанного файла. Но тут возникает вопрос - а можно ли эту задачу отнести к той же криптографии, ведь мы там также решаем сложные задачи для запутывания, но само решение задачи все еще находится там внутри. То есть, возможно ли ускорить процесс анализа malware за счет GPU или quantum computing? Или вовсе математически доказать наличие корневой логики которая является malware-подобной но без проведения анализа? Или можно создать такой математический алгоритм который будет разворачивать любой сложности запутанности malware на самые базовые компоненты или около исходный вариант который будет в разы проще анализировать? Также это похоже немного на Zero Knowledge proof задачу. Главное понимать, что текущая парадигма анализа malware в индустрии не является конечной, всегда найдутся другие и более инновационные которые раздробят все устои или дополнят их хотя бы. Trying to proof about malwares что все таки возможна какая-та теория доказательства malware-подобности исполнительных файлов которых мы не можем проанализировать из-за anti-analysis подходов внутри них (обфускация, пакетирование, анти-дебаг, и т.д.). В google play also can be скрытые viruses даже те что прошли стадии верификации (поэтому нужно применять Zero Trust methodology и проводить дополнительные проверки - we need to be paranoid and aware every time). Также не доверять рандомным акторам. Google также имеет характеристики malware, им выгодны чтобы другие акторы не устанавливали свои malwares. Тут все зависит от нашего threat modeling и где ставить крайнюю линию что является malware. “uac lvl3 lvl4 bypass техниками в недавней win11 25h2, и то они не пофиксили причины проблем а лишь MS Defender начал их детектить. Менее известные техники все также без проблем проходят”
+
 The results include an analysis of security and critical decisions derived from the proposed methodology. %  as well as a comparison with existing market solutions addressing the same topic.
+
 \subsection{Threat modeling and risks}
-% TODO: Добавить про потенциальные риски также
 The analysis emphasized the external perimeter while also exploring specific elements of the PyPI platform, which already demonstrates several comparable and thematically relevant aspects. It hosts a large number of different Python packages and is owned by the Python Software Foundation (PSF) which operates under a free and open model, where any user may use the package manager or other mechanisms to upload, download, and publish packages in the form of source or build distributions. Similar systems and policies are followed by other software repositories and ecosystems, such as Maven Central, NPM, Crates, and many others. 
 \begin{figure}
     \centering
@@ -343,15 +465,18 @@ Also, there was prepared the DFD (data-flow diagram) legend with all necessary e
 \end{figure}
 
 \subsection{Tradeoffs in the architecture prototype}
+% @TODO: Тут также добавить про то что системы будет открытой и любой сможет поучаствовать в развитии проекта в дальнейшем и его философия (что его отличает от конкурентов). Need references and examples of such toolkits. Add table сравнение с другими решения и анализ рисков (потенциальные риски)
+% @TODO: В прототип версии компоненты бандла нельзя будет создавать свои (то есть я могу имплементировать только Interactor, Collector и т.д.) - а в последующих версиях все что в бандле будет называться “Utility Module/Component” который можно будет сделать полностью своим (вместо Interactor и стандартного набора (они станут как примеры для стандартной библиотеки) - какой нибудь Quacker который будет посылать на основе логов квак сообщение и т.д. по полному абсурду и для удобства). AbstractUtility <- Interactor, Quacker, etc.
+% @TODO: Сравнить и привести примеры как работают элементы других систем (SOTA solutions) для сравнения со своей раскрывая аспекты и характеристики, постепенно вычленяя определенные элементы которые слабо-развитые в их контексте
 This section outlines the critical architectural decisions made and the reasoning behind them. Firstly, it was decided to keep the Parser and Analyzer separate to ensure better decomposition; however, merging them into a single entity could improve performance and efficiency. Secondly, to reduce the load and prevent bottlenecks on a single Orchestrator, multiple instances of the Engine should be deployed, or the system should run in a concurrent or parallel mode. Thirdly, it was decided to group task executors into a single Bundle, as these components were found to be highly interdependent. Initially, they were considered as separate entities without direct communication, following a microkernel architecture in which component interaction occurs asynchronously (via message bus and inter-process communication). However, this approach proved unsuitable, since Collector depends on the specific implementation of the data source, Parser requires awareness of data format, and Analyzer cannot detect anomalies or draw conclusions from incompatible input data.
 
-\section{Conclusion} % Заключение – данные должны быть обсуждены, результаты интерпретированы и сделаны выводы.
+\section{Conclusion}
+% @TODO: Заключение – данные должны быть обсуждены, результаты интерпретированы и сделаны выводы.
 The topic of supply chain management in IT infrastructure remains highly relevant, as the number of related incidents continues to grow despite the emergence of new tools and standards. More fundamental, preventive measures may be required at the source level, where software packages are produced, rather than reacting after incidents occur.
 
 Future research will focus on converting the proposed methodology into a microservice-based system, which remains a challenging task due to its complexity and management requirements. However, such an approach would enable scalability and continuous integration of new functionality without interrupting the platform. Further work will also include a full implementation of the system and an independent statistical analysis of software dependencies beyond those examined in the current literature review.
-\end{comment}
 
 % \nocite{*}
-\printbibliography % deduplication and autoformatting https://tex.stackexchange.com/questions/233086/avoiding-duplicate-entries-in-bibliography-having-different-cite-keys, Also check if rendering is right for IEEETran and links also represented https://libraryguides.vu.edu.au/ieeereferencing/technicalreports
+\printbibliography
 
 \end{document}
