@@ -5,6 +5,7 @@ Research paper for [AITU SIST 2026 Conference](https://sist.astanait.edu.kz/)
 - Based on "IEEE Conference Template" and AITU SIST requirements
 - Conference track: "Computer science, IEEE Computer Society (CS), IEEE Transactions on Computers. Performance, fault tolerance, reliability, security, and testability"
 - It is an draft whitepaper for `codecore` which initiates related ecosystem of solutions/methods (`codestash`, `fastsandbox`, `codeless`, `codeload`, etc.)
+- Practical showcase for methodological and results are located within `/practice`.
 
 ## Requirements
 - Used software: texlive, biber, gnu make, drawio

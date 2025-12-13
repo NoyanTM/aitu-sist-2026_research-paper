@@ -1,5 +1,6 @@
 /build/*
 !/build/.keep
+/practice
 
 ## Core latex/pdflatex auxiliary files:
 *.aux

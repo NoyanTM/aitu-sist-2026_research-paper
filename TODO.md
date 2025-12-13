@@ -2,23 +2,24 @@
 ## Text
 1. General thing that are good to have:
     - Add more structured explanation and details to each description of figure.
-    - Write more details to already created bullet points with detailed explanation.
+    - Write more details to already created bullet points with detailed explanation (coherent writting as flow).
     - Extract more information and details from each reference.
     - Extend ideas and sections also by adding text, algorithms, tables, figures.
     - Edit grammar mistakes in draft and check its coherence by rereading / reviews from others (refine text to be more academically and have rich grammar)
     - Check text for plagiarims and use of AI.
 1. Notes from reviewer/supervisor:
+    - decompose subchapter "Compromise and trust in security" to 2-3 subchapter because it is too long
     - Добавить, если возможно, псевдокод или сценарий применения: например, показать шаги анализа конкретного пакета или библиотеки через предложенную систему;
     - Analyzer упомянут, но какие именно алгоритмы или модели он использует для вынесения вердиктов, не раскрыто. Можно ли описать, как будут выявляться “критические компоненты” или аномалии: правила, ML-модели, сигнатуры?
     - Нужно обязательно расширить раздел Results экспериментальными данными, либо чётче показать, что методология базируется на проверенных компонентах (напр., использовать существующие песочницы, известные инструменты – это подразумевается, но можно указать примеры типа Cuckoo Sandbox и как они интегрируются).
     - Как говорилось выше, нужны экспериментальные проверки, если это возможно. Можно запустить ограниченный эксперимент: например, запустить прототип (пусть даже вручную) на нескольких зависимостях с известными уязвимостями или бэкдорами и показать, что он собирает определённые поведенческие данные. Даже если без полноценных метрик, описательный пример усилит доверие к выводам.
     - В раздел Conclusion или Discussion нужно вписать что то типа: «в отличие от существующих решений X и Y, наш подход делает Z». Можно вставить небольшой параграф сравнения с конкретными инструментами SCA или исследовательскими работами (как упоминалось, QUT-DV25, SandDriller и т.п.), чтобы рецензенты MDPI (https://www.mdpi.com/journal/computers) увидели понимание ландшафта. Надо сформулировать уникальный вклад статьи (например: «мы первые предложили использовать песочницы для проактивного SCA в DevOps, тогда как предыдущие работы фокусировались либо на статике, либо на пост-фактум анализе инцидентов»).
 1. Methodology:
-    - Add visually connections of ports, adapters, interfaces in diagram of  architecture. На 	рисунках стрелки передачи данные 	(двойные и одинарные) - поменять 	в зависимости от того как передаются данные. на архитектуре показать какие 	данные передаются и в каком протоколе. 	объяснить что за передача данных и что 	передает и что такое API и как
-    - UML diagrams and logical model with details: refined architecture, component diagram based on architecture, package diagram for project layout, use case scenarios / diagrams (from system perspective), user stories (from user perspective), flowcharts, entity diagram, maybe write some parts within excel tables. Перерисовать или дорисовать UML diagrams: Use Case Diagram (need use case scenarios and more use cases), Sequence Diagram, Class Diagram, Component Diagram, Activity Diagram
+    - алгоритмы, pseudocode, блок-схемы, UML diagrams
+    - UML diagrams and logical model with details: refined architecture, component diagram based on architecture, package diagram for project layout, use case scenarios / diagrams (from system perspective), user stories (from user perspective), flowcharts, entity diagram, maybe write some parts within excel tables. Перерисовать или дорисовать UML diagrams: Use Case Diagram (need use case scenarios and more use cases), Sequence Diagram, Class Diagram, Component Diagram, Activity Diagram. Redraw architecture as UML Package Diagram and component diagram
     - Physical model: dependencies and technologies (programming languages, network protocols, etc.). MVP / PoC of the platform (for storing, analysis, analytics of software distributions). It will be practical implementation or prototype that tries to prove hypothesis and theories, consisting of: CLI toolkit, web-ui, desktop-gui, backend-api, etc.
 1. Results:
-    - Архитектурой системы и Алгоритмом работы, и результатом гипотезы (данные графики таблицы).
+    - Результатом гипотезы (данные графики таблицы).
     - Перерисовать level-0 dfd чтобы там были описаны базовые взаимодействия а не только одна стрелка потоков данных.
     - Перерисовать некоторые потоки данных в level-1 dfd (направления стрелок, где VPN должны быть двунаправленными). Level 1+ dfd тоже перерисовать, ведь они слишком походят на блок-схемы чем на dfd
     - Перерисовать Attack scenarios (attack tree / paths / vectors), чтобы было более детально и понятно и риски.
