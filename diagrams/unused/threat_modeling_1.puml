@@ -1,0 +1,22 @@
+@startmindmap
+* Supply-Chain Compromise: malicious code in package releases
+** Goal: Distribute malicious code to downstream users
+*** Vector: Compromise Maintainer Account (T1078)
+**** Means: Credential reuse / weak password
+**** Means: Phishing / social engineering (T1566)
+**** Means: Compromised email recovery (T1586)
+**** Mitigation: MFA, strong password policies, account monitoring
+*** Vector: Compromise Build/CI Pipeline (T1528, T1612)
+**** Means: Stolen CI tokens or leaked credentials (T1528)
+**** Means: Tampered CI config or dependency injection (T1195.001 / T1195.002)
+**** Mitigation: Ephemeral tokens, least-privilege CI roles, signed builds
+*** Vector: Upstream Dependency Poisoning (T1195.001)
+**** Means: Inject malicious dependency in transitive chain
+**** Mitigation: Dependency pinning, SBOM, dependency scanning, reproducible builds
+*** Vector: Typosquatting / Impersonation (T1583.001)
+**** Means: Publish similarly named package to trick consumers
+**** Mitigation: Name squatting detection, curated package lists, publisher verification
+*** Detection / Response
+**** Indicators: Unexpected version releases, anomalous downloads, checksum mismatches
+**** Controls: Code-signing verification, vulnerability scanners, rollback capabilities
+@endmindmap

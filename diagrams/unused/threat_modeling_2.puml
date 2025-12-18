@@ -1,0 +1,20 @@
+@startmindmap
+* Account Takeover / Package Hijack
+** Goal: Replace legitimate releases with malicious or backdoored versions
+*** Vector: Direct Credential Theft (T1110, T1078)
+**** Means: Phishing, credential stuffing, leaked credentials (T1566, T1110)
+**** Mitigation: Enforced MFA, login anomaly detection, password hygiene
+*** Vector: Social Engineering / Support Abuse (T1566, T1586)
+**** Means: Trick moderators or platform staff to transfer ownership
+**** Mitigation: Strict transfer policies, multi-party approvals, audit trails
+*** Vector: Abandoned Package Takeover (T1078.004 / policy)
+**** Means: Claim or inherit an unmaintained package
+**** Mitigation: Dormant-package policies, owner verification, community notification
+*** Vector: Compromise of Recovery Channels (T1586)
+**** Means: Attacker gains access to linked email or SSO
+**** Mitigation: Hardened account recovery, recovery MFA, notification on recovery changes
+*** Consequences
+**** Malicious releases, credential harvesting from consumers, reputational damage
+*** Detection / Response
+**** Controls: Release gating, release provenance (signatures), automated sanity checks, alerting on ownership changes
+@endmindmap

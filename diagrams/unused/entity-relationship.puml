@@ -1,0 +1,96 @@
+@startuml
+
+' avoid problems with angled crows feet
+skinparam linetype ortho
+
+' TODO: UUID4 and UUID7?
+' TODO: multiple session of user at once (e.g., user from mobile and website) чтобы не выкидывало со сессии если зашел с нового устройства?
+' TODO: mixins and general columns
+' is_active : bool, default = True
+' created_at, updated_at, deleted_at - _at, when, and other timestamps (as logging of last N changed states)
+entity Session {
+    * id (PK) : BIGINT
+    metadata : JSONB, not null
+    user_id (FK): BIGINT, not null, unique
+}
+
+' i.e., Account, Profile, Person
+entity User {
+    * id (PK) : BIGINT
+    ' username
+    ' avatar
+    ' role_id : moderation, admin, ...
+    ' description
+    name : str(128), nullable
+    email : str(256), unique
+    hashed_password : str(256), not null
+}
+
+' i.e., Member, Participant
+' member roles: pre-made roles or custom (roles within organization)
+entity Membership {
+    * id (PK) : BIGINT
+    user_id (FK) : BIGINT, unique
+    organization_id (FK) : BIGINT, unique
+    role : ENUM ("GUEST", "PARTICIPANT", "MODERATOR", "ADMIN", "OWNER")
+    status : ENUM ("PENDING", "ACCEPTED", "DECLINED")
+}
+
+entity Organization {
+    * id (PK) : BIGINT
+    title : str, not null
+    description : str, nullable
+    ' TODO: other fields
+}
+
+' research team / workgroup / research project (subgroup within organization)
+' members, avatar, description, etc.
+
+' TODO: external reports (выгрузки)
+entity Analysis {
+    * id (PK) : BIGINT
+    title : str, not null
+    description : str, nullable
+    scanner_type : str
+    results : JSONB, nullable
+    sample_id (FK) : BIGINT, not null, unique
+    organization_id (FK) : BIGINT, not null, unique
+}
+
+' TODO: not only file samples, but also other IoC provided
+' "something to be need analyzed"
+' TODO: analysis can have multiple samples at once, bulk upload like in google drive, also analysis is named Task in Cuckoo originally
+entity Sample {
+    * id (PK) : BIGINT
+    title : str
+    extension : str
+    ' format
+    byte_size : int
+    link : str
+    organization_id (FK) : BIGINT, not null, unique
+}
+
+' entity Machine (available or connected)
+' entity Comment (id, message / data, organization_id not null) - Comment M:1 Analysis (one analysis have multiple comments)
+' entity Report (generate report in HTML, PDF, JSON, etc.)
+
+' User has a session (User 1:1 Session)
+User ||--|| Session
+
+' User had memberships / can in multiple organizations (User 1:M (optional) Membership)
+' User может находится ни в какой группе
+' User может создать группу или присоединиться к другой (вариант приглашения или его аналог иначе кто угоднр будет заходить в группы)
+' User <-many to many-> Organization
+User |o--|{ Membership
+
+' Organization has members
+' mandatory relationship группа не может существовать и нет смысла ее существования без users, поэтому группа без users должна самоуничтожаться/архивироваться или тот же user-owner должен ее удалить прежде чем выйти из группы
+Organization ||--|{ Membership
+
+' Organization have multiple analyses
+Analysis |o--|{ Organization
+
+' TODO: Organization -> Sample also
+Sample ||--|| Analysis
+
+@enduml

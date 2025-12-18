@@ -1,0 +1,17 @@
+@startuml
+!include styles.puml
+
+actor Developer as developer
+participant "Source/version control system" as vcs
+participant "Software repository/registry (e.g., PyPI)" as repository
+participant "Analysis platform" as platform
+
+developer --> vcs : Uploads changes to the software product/project
+vcs --> repository : Triggers a CI/CD pipeline to publish a specific version and changes to the ecosystem
+repository --> platform : Sends stored the untrusted source code or build distribution/artifact of software package to analysis process
+activate platform
+platform --> platform : Acts as verification/moderation barrier ("security and quality gate") on a given instance of software
+platform --> repository : Returns a verdicts with detailed report and reputation score
+deactivate platform
+repository --> repository : Evaluates the verdict to allow/disallow public publication or flag/mark the package as "untrusted" for other end-users
+@enduml

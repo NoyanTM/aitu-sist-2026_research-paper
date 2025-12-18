@@ -1,0 +1,24 @@
+@startuml
+!include styles.puml
+
+participant Orchestrator
+participant AnyComponent
+
+' Examples during task execution
+' TODO: add example when task execution is too long and nothing goes to completion
+autonumber "Example A"
+Orchestrator -> AnyComponent : Task execution status?
+AnyComponent -> Orchestrator : Task execution\ndetailed status\n(percents, files, etc.)
+Orchestrator -> Orchestrator : Wait for some time\n and then start regular checking\nin the loop
+Orchestrator -> AnyComponent : Task execution status? 
+AnyComponent -> Orchestrator : Task execution with status\n"completed" and detailed data response
+autonumber stop
+
+' прирывает выполнение и выдает ошибку или пытается перезапустить весь процесс
+autonumber "Example B"
+Orchestrator -> AnyComponent : Task execution status? (N times)
+AnyComponent -> Orchestrator : No response
+Orchestrator -> Orchestrator : Task execution at N component failed
+autonumber stop
+
+@enduml

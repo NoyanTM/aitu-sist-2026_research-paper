@@ -1,0 +1,48 @@
+@startuml
+!include styles.puml
+left to right direction
+
+' Actors:
+:User:
+:Publisher:
+note left of Publisher
+  publisher of packages, source,
+  build, and other forms of
+  software distributions
+end note
+:Moderation\nand technical support: as Support
+:Administrator\nand service staff: as Service
+User <|-- Publisher
+Publisher <|-- Service
+User <|-- Support
+
+' Use cases
+rectangle Platform {
+  usecase "Search for available software distribution" as UC1
+  usecase "Download software distribution (metadata and data)" as UC2
+  usecase "Rate and comment on a page about specific software distribution" as UC3
+  UC2 .> UC1 : <<extends>>
+  UC3 .> UC1 : <<extends>>
+  usecase "Register account on the platform/system" as UC4
+  usecase "Login to the platform/system" as UC5
+  usecase "Logout off the platform/system" as UC6
+  usecase "Create reporting ticket/request" as UC7
+  usecase "Send messages inside created ticket/request" as UC8
+  note right of UC8
+    attaching and providing some evidences
+    about suspicious or unstrusted software distributions,
+    bugs or issues of the platform/system,
+    about other users, and so on
+  end note
+  ' take ticket, add responsible people, transfer responsibility, close ticket - moderation  
+}
+
+' Actors to use cases
+User ---> UC1
+User ---> UC3
+User ---> UC4
+User ---> UC5
+User ---> UC7
+
+
+@enduml

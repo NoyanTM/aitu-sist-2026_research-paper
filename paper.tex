@@ -321,7 +321,7 @@ For these reasons, the National Institute of Standards and Technology (NIST) dev
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=1.0\linewidth]{network_segmentation_in_zero_trust}
-    \caption{Network segmentation in ZTA, where each segment consists of multiple defense layers and granular microservice.}
+    \caption{Network segmentation in ZTA, where each segment consists of multiple defense layers and granular microservices.}
     \label{fig:network_segmentation_in_zero_trust}
 \end{figure}
 One example of ZTA implementation is blockchain systems, which contain zero-knowledge proofs and consensus algorithms such as "proof of work" and others that guarantee trust based on a defined trust factor (e.g., computational power, number of devices/actors, amount of specific tokens) \cite{banguiWhenTrustlessMeets2024}. Furthermore, there is a concept of "trustless" in the same sphere that futher reinforces ZTA and trust management approaches in distributed systems. Some studies even consider the potential for applying blockchain as a version control system due to its data integrity and non-repudiation characteristics \cite{grilliCombiningGitBlockchain2024}.
@@ -443,21 +443,16 @@ Especially, principles of connectivity to artificial instances is represented wi
     \label{fig:agent_and_agent-based_strategies}
 \end{figure}
 
-% --------------------------------------------------------------------------
-% subpart: gathering data and attending experiment how we can already enchance SCA and software repositories (like PyPI) by applying existing solutions (like Cuckoo Sandbox) and not even implementing for now system from scratch (for now, then implement if there will be enought opportunity and resources after such whitepaper). Gather also malware datasets and other datasets with packages from PyPI
+\subsection{Practical application of the methodology}
+% @TODO: расписать что такое примение может быть стандартизировано, то есть необходим единый стандарт of continuous security и swagger API for such system, instead of multiple разные ПО like Cuckoo и его альтернативами которые все сделаны по своему. Добавить, если возможно, псевдокод или сценарий применения: например, показать шаги анализа конкретного пакета или библиотеки через предложенную систему;
+% @TODO: Указать более детально какие метрики (для сбора данных и инструменты), какие пакеты и сколько (описание датасета) -> "all gathered additional data (from runtime, files, hidden dependencies, and so on). But there are certain categories of software that we cannot test or limited (API clients to saas products because it would require some account- but such API clients would be checked statically and will be marked as potentially untrusted)"
+% @TODO: В результатах уже показать в табличном виде что нашлось и где больше и качественнее. Gather also malware datasets and other datasets with packages. 
 
-% Расписать “Из-за того что в целом реализация это сложная часть на основе спецификации и проблематичная из-за ограниченности ресурсов и возможностей. Поэтому попробовали протестировать данную методологию уже на существующий инструментах”
-% Тут пояснить как их модифицировали и с какими SCA инструментами сравнивали и какие метрики детальные и какие пакеты и сколько и т.д. В результатах уже показать в табличном виде что нашлось и где больше и качественнее.
-%  А также как можно легко модифицировать репозитории пакетов (PyPI тот же) чтобы они на всем жизненном цикле пакетов отправляли его на анализ в развернутый sandbox (и сделать какой нибудь единый стандарт для этого - то есть задокументировать пайплайн такого процесса в sequence diagram и swagger API)
-%  Для простоты развернуть cape in docker with correct networking exposed interfaces to connect with virtualbox. А также переписать modules скрипт для анализа попробовав его специфично настроить для сбора зависимостей с wheel или корректной работы ai agentов внутри sandbox (чтоб перед анализом давать им задание в виде текста и т.д.)
-%  find repositories with cuckoo and cape docker
+% @TODO: add image secure_software_pipeline.pdf (applying_zta_and_security_for_software_pipeline to дополнить SCA in UML sequence diagram). add image overview_of_software_analysis_process.pdf (process of software analysis details within sandboxed environment in UML sequence diagram). Also proper explanation for them and what to change in their prototypes as comments
+С практической точки зрения ранее предложенные подходы уже сейчас даже можно интегировать в existing systems for software repositories to enhance SCA and 
+сформировать principle of continuous security, ведь sandboxes хорошо применимы для лабораторного исследования ПО или like its containmenation before publications or changes. Для этого был подготовлен case как можно легко модифицировать репозитории пакетов (i.e., PyPI), чтобы на протяжении всего жизненного цикла ПО или других компонентов IT infrastructure они посылались на анализ в развернутый sandboxes. The analysis emphasized the external perimeter while also exploring specific elements of the PyPI platform, which already demonstrates several comparable and thematically relevant aspects. It hosts a large number of different Python packages and is owned by the Python Software Foundation (PSF) which operates under a free and open model, where any user may use the package manager or other mechanisms to upload, download, and publish packages in the form of source or build distributions. Similar systems and policies are followed by other software repositories and ecosystems, such as Maven Central, NPM, Crates, and many others. Moreover, the prototype concept demonstrates a variation that can be implemented independently of specific technologies, making it a technology-agnostic and portable solution (ведь принципы и методологии первичны а инструменты вторичны). Поэтому, попробовали протестировать данную методолгию уже на существующих инструментах для gathering data and attending experiment by applying existing solutions (like Cuckoo Sandbox и схожих решениях).
 % --------------------------------------------------------------------------
 
-% subpart: conclusion of methodology with transition to results
-% @TODO: expand this part coherently and with summarized details 
-The prototype demonstrates a variation that can be implemented independently of specific technologies, making it a technology-agnostic and portable solution.
-
-% --------------------------------------------------------------------------
 \section{Results and discussions}
 % @TODO: Результаты – гипотеза должна быть проверена, а данные, представляющие результаты проверки, представлены. (обязательно графики и таблицы с результатами данных). результат это алгоритм, метод, модель, архитектура для статьи и также обоснование. Критика системы и недостатков и сравнение с другими альтернативами и то что мы не покрыли в research. comparative analysis
 % @TODO: introduction to results - "The results include an analysis of security and critical decisions derived from the proposed methodology as well as a comparison with existing market solutions addressing the same topic".
@@ -466,7 +461,6 @@ The prototype demonstrates a variation that can be implemented independently of 
 % ...
 
 \subsection{Threat modeling and risks}
-The analysis emphasized the external perimeter while also exploring specific elements of the PyPI platform, which already demonstrates several comparable and thematically relevant aspects. It hosts a large number of different Python packages and is owned by the Python Software Foundation (PSF) which operates under a free and open model, where any user may use the package manager or other mechanisms to upload, download, and publish packages in the form of source or build distributions. Similar systems and policies are followed by other software repositories and ecosystems, such as Maven Central, NPM, Crates, and many others.
 \begin{figure}
     \centering
     \includegraphics[width=1.0\linewidth]{}
@@ -490,6 +484,7 @@ This section outlines the critical architectural decisions made and the reasonin
 % @TODO: Add reference to ahmedReviewHybridDeep2024 (about side-channel attack) in flaws of sandboxed environments
 % @TODO: уязвимости of ai agents like cross-prompt injection (https://learn.microsoft.com/en-us/windows/security/book/operating-system-agentic-security)
 % @TODO: reference на то как Capev2 ротирует характеристики VM в реестре и github.com/zhaodice/qemu-anti-detection
+% @TOO: virtualization inside virtualization is slower, limits of Nested virtualization, and so on
 Sandboxes тоже не ultimate solution и у них есть свои limitations. Firsly, симуляция это лишь поверхностная модель и не всегда представляет полную картину мира - поэтому отклоняется от реальности и недочеты. Secondly, возможны уязвимости с побегами из untrusted изолированного окружения в другие зоны IT инфраструктры. Thirdly, эмуляция и виртуализация отличаются от реального железа по характеристикам и качественным свойствам. Конечно, можно подставлять характеристики реального устройства и ротировать для маскировки, но реальное физическое устройство ведет себя по другому в некоторых случаях. К примеру, есть side-channel атаки и некоторые уязвимости физического железа которые не будут проявляться или наоборот. Поэтому, некоторое ПО пользуется этими особеностями для определения нахождения себя в таком искусственном окружении тем самым скрывая свое поведение в нем или запрещая свою работу (e.g., SEB). Это потребует дополнительных манипуляций таких как пересобирать исходник, патчить или дебажить бинарник, и т.д. 
 
 В целом, в таких задачах мы пытаемся найти корневую логику или восставноить ее или ключевые моменты и специально запутанного artifact. Текущая парадигма в индустрии не является конечной, всегда найдутся другие и более инновационные которые переосмыслят все устои или дополнят их. Возможно такой domain задач можно отнести к encryption from cryptography где происходит решение сложных задача для запутывания но сам исходник находится внутри но в усложненном представлении, где можно ускорить descryption за счет GPU или quantum computing (для разворачивания запутанности malware на самые базовые компоненты или около исходный вариант который будет в разы проще анализировать). Также стоит задавать вопросы возможности решения анализа malware или ПО в математическом представлеии за счет доказания наличия определенной корневой логики которая является malware-подобной но без проведения анализа исходных файлов мы не можем проанализировать.

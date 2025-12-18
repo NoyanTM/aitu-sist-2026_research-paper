@@ -1,0 +1,71 @@
+@startuml
+
+!theme plain
+skinparam maxMessageSize 550
+!pragma teoz true
+
+' @TODO: need complex conditionals and error handling for specific cases (infrastructure error like database problem or out of memory error) instead of only happy path
+' @TODO: определить каким образом и как Сollector будет источники определять for externalresourcerepositorie 
+' @TODO: отредактировать чтобы все данные шли только через Orchestrator (нам нельзя делать direct communications, только inter-process communications)
+' @TODO: How Orchestrator checks task execution
+' @TODO: ведь делать запросы во внешнюю сеть из самого инстанса небезопасно (without network access to hosting network, but to internet or without access entirely?)
+' @TODO: combine with analysis-process_2.puml and draw.io, and maybe combine with also secure-pipeline.puml
+' @TODO: participant Additional External Resources and Repositories
+' Collector -> ExternalResourceRepositories : Request for additional data\nabout software distribution
+' ExternalResourceRepositories -> Collector : Response with data
+' Collector -> Orchestrator: Ready for data gathering and prepared external data
+' Orchestrator -> Instancer: Redirect all data into created instance
+' @TODO: instead data redirection - just sending URI within object storage (так чтобы данные находились и переходили напрямую не через Orchestrator а передавалась лишь URI/URL ссылка/текст с database or storage)
+' @TODO: volatility.yml, misp.yml, jinja2, codegenerations
+
+' Elements:
+participant "Software repository/registry (e.g., PyPI)" as repository
+box "Components of analysis platform"
+participant "Core services of analysis platform\nwith entrypoints/exitpoints" as platform
+participant "Database\n(DBMS)" as database
+participant "Object/file storage" as storage
+queue "Message queue\nand event broker" as queue
+box "Components of analysis system and engine"
+participant Orchestrator
+box "Components within a bundle"
+participant Instancer
+participant Collector
+' @TODO: participant Interactor
+participant Parser
+participant Analyzer
+end box
+end box
+end box
+
+' Sequences:
+autonumber
+repository -> platform : Send stored the untrusted source code or build distribution of software packages to analysis process (collections of IoCs/artifacts) via HTTP API by batches or whole
+platform -> storage : Save IoCs/artifacts in raw/blob format
+storage -> platform : Return URI and identifier
+platform -> database : Add record (metadata) about IoCs/artifacts with relative URI and identifier from storage
+platform -> queue : Create task and add it to queue
+queue -> platform : The task is up for execution (task N, task N+1, task N+2, ...) after N time period
+platform -> Orchestrator : Task metadata and data\nwith status "requested/started",\nspecified "bundle" to use
+Orchestrator -> Instancer : Specific identified requirements of environment
+create Instances
+Instancer -> Instances : Provision instances/machines (single machine or cluster with scaling capabilities) on-demand/temporary according to requirements (virtual machines, containers, and sandboxed environments via docker or vagrant based on different OS, virtualization platforms, and cloud solutions)
+activate Instances
+Instancer -> Orchestrator : Notification about created instance with specified\nparameters according to requiremenents
+Orchestrator -> Collector : Data about created instance\nand its configuration
+Orchestrator -> Orchestrator: Check if everything is ready\nand right for task execution
+Orchestrator -> Instancer: Call to start task execution
+Orchestrator -> Collector: Call to start data gathering from instance
+Instancer -> Instances : Execute workflow pipeline of instruments based on specified parameters, type of artifact, modules (e.g., yara, misp, magic numbers, hashes), and scripts in agentless or agent-based (via ansible and ansible-pull) strategies.
+Instances -> Instances : Compare and monitor all changes (or limited amount) inside the system. For example:\n-build and download everything need for specific package,\n-capture and gather data from build procedure itself (statistical parsing wheel, source, venv),\n-dynamically checking running program and processes,\n-constructing tree of (hypothetically possible) dependencies and processes in formatted manifest file.
+Instancer -> Orchestrator: Task execution is done
+Orchestrator -> Collector: Stop data gathering\nand transfer it to Parser
+Instancer -> Instances !! : Delete and clean up
+deactivate Instances
+Collector -> Parser: Gathered data during task execution
+Parser -> Analyzer: Parsed and validated data\nin a form of unified IR
+Analyzer -> Orchestrator: Detailed information and analysis\n(scores, quality, dependencies, etc.)
+' Orchestrator -> все собранные материалы сохраняются в database and storage (metadata and data)
+Orchestrator -> platform: Detailed information and analysis\n(scores, quality, dependencies, etc.)
+platform -> repository: Response with report about\nspecific software distribution:\ndetailed information and analysis\n(scores, quality, dependencies, etc.) in specific format (e.g., html, json, etc.)
+
+@enduml

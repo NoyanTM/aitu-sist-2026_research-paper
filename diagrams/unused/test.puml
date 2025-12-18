@@ -1,0 +1,34 @@
+@startuml
+skinparam linetype ortho
+left to right direction
+@startdot
+digraph G {
+  rankdir=TB
+  ' nodesep=0.6
+  ' ranksep=0.9
+  node [fontname="Arial"]
+
+  # Shapes
+  Start [shape=ellipse, label="Начало"]
+  Init [shape=box, label="Инициализация i=0"]
+  Process [shape=box, label="Обработка данных"]
+  Decision [shape=diamond, label="i < N?"]
+  Inc [shape=box, label="i = i + 1"]
+  End [shape=ellipse, label="Конец"]
+
+  # Comments
+  C1 [shape=box, style=dashed, label="Комментарий: Установить начальные значения"]
+  C2 [shape=note, style=dashed, label="Комментарий: Проверка условия цикла"]
+
+  # Flow
+  Start -> Init -> Process -> Decision
+  Decision -> Inc [label="Да"]
+  Inc -> Process
+  Decision -> End [label="Нет"]
+
+  # Attach comments
+  Init -> C1 [style=dashed, arrowhead=none]
+  Decision -> C2 [style=dashed, arrowhead=none]
+}
+@enddot
+@enduml

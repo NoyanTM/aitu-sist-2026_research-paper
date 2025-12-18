@@ -1,0 +1,77 @@
+@startuml
+!include flowchart_styles.puml
+
+start
+declare("minimum_concepts: integer\n\
+minimum_specifications: integer\n\
+minimum_courses: Optional[integer]\n\
+minimum_conferences: Optional[integer]\n\
+is_passed_recently: bool\n\
+training_criteria: integer")
+
+' TODO: training frequency instead
+input("is_passed_recently")
+note right 
+  From ERP system or other informational systems.
+  Employees / team members must attend N of trainings
+  amount per year / month / sprint cycles,
+  so it is not mandatory to take them everytime
+end note
+
+if(is_passed_recently) then (true)
+  output("Message that already passed\n\
+  training cycle, wait for next")
+  stop
+else (false)
+  assign("minimum_concepts = 3\n\
+  minimum_specifications = 1")
+
+  if (need supplementary knowledge related to sprint tasks or details) then (true)
+    repeat :Enter required amount of courses:
+    input("minimum_courses")
+    note right: from employee to email\nor informational system
+    backward output("Not more than 3 at the same time,\n\
+    because you will be blocked from tasks")
+    repeat while (minimum_courses < 3 AND minimum_courses > 0) is (true) not (false)
+    process("Getting certifications and taking courses\n\
+    in broad or specific topics")
+    note right: For example, Hack The Box (HTB), Try Hack Me (THM), etc.
+  else (false)
+    assign("minimum_courses = None")
+    ' minimum_courses = 0
+  endif
+
+  if (want to attend or present at technical / security conference) then (true)
+    assign("conference_data: dictionary := {}")
+    input("conference_data['title']\n\
+    conference_data['registration']\n\
+    conference_data['date']")
+    note right: from employee in paper format or digital
+    assign("minimum_conferences = 1")
+  else (false)
+    assign("minimum_conferences = None")
+  endif
+
+  process("Trainings on security fundamentials\n\
+  and advanced concepts / content")
+  note right
+    e.g., "secure design", "threat modeling",
+    "security testing", "development", "privacy", etc.;
+  end note
+
+  process("Researching security specifications\n\
+  and well-known materials")
+  note right: e.g., "OWASP Cheat Sheet Series", "ANSI/ISO", "NIST", etc.
+
+  ' TODO: if complete and verified everything so 100 training_criteria
+  ' TODO: raiting system for personal only metric
+  ' TODO: rewards and achivements system like progress and motivation to be more secure
+  defprocess("Data collection from employees\n\
+  via quantitative and qualitative methods\n\
+  to get actual indicators / metrics how\n\
+  training is really effective on their work and product")
+  note right: questionnaires, interview, и т.д.
+
+  stop
+endif
+@enduml

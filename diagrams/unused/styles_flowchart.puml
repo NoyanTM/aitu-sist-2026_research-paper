@@ -1,0 +1,44 @@
+' TODO: multiple dynamic arguments (load_json)
+' TODO: split by lines automatically (maxmessage size maybe?)
+' TODO: generate activity procedures automatically from json specification (for assign, input, etc.) 
+' TODO: change scale/dpi of rendered image or svg output
+' TODO: turn off automatic word wrapping / container auto sizing
+
+<style>
+skinparam ConditionEndStyle hline
+activityDiagram {
+  activity {
+    RoundCorner 0
+    MinimumWidth 150
+    MaximumWidth 150
+    ' MinimumHeight 150
+    ' MaximumHeight 150
+    ' Shape database
+  }
+  HorizontalAlignment center
+}
+</style>
+
+!procedure declare($text)
+  :**Declare**\n$text;
+!endprocedure
+
+!procedure assign($text)
+  :**Assign**\n$text;
+!endprocedure
+
+!procedure input($text)
+  :**Input**\n$text; <<save>>
+!endprocedure
+
+!procedure output($text)
+  :**Output**\n$text; <<save>>
+!endprocedure
+
+!procedure process($text)
+  :**Process**\n$text;
+!endprocedure
+
+!procedure defprocess($text)
+  :**Predefined process**\n$text; <<procedure>>
+!endprocedure

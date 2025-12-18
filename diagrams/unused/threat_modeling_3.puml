@@ -1,0 +1,23 @@
+@startmindmap
+* Platform / Infrastructure Compromise: undermining repository integrity
+** Goal: Modify repository behavior, tamper index or distribution artifacts
+*** Vector: Exploit Unpatched Service Components (various CVE techniques)
+**** Means: Vulnerabilities in web servers, package index software, or middleware
+**** Mitigation: Regular patching, vulnerability management, hardened configurations
+*** Vector: Stolen Service/API Keys (T1528, T1537)
+**** Means: Leaked keys in logs, repos, or third-party integrations (T1528)
+**** Mitigation: Key rotation, secrets scanning, vaulting, least privilege
+*** Vector: Misconfigured Access Controls (T1078, RBAC issues)
+**** Means: Overbroad admin roles, missing RBAC constraints
+**** Mitigation: RBAC, separation of duties, sudo approvals, audit logging
+*** Vector: Third-party Dependency Compromise (T1195.*)
+**** Means: Malicious/compromised libs used by platform components
+**** Mitigation: SBOM for platform, supply-chain checks, attestations
+*** Vector: Moderation/Policy Abuse (T1566 / social engineering of staff)
+**** Means: Attacker bypasses moderation to allow malicious packages
+**** Mitigation: Multi-review moderation, automated policy enforcement, moderator training
+*** Consequences
+**** Index manipulation, poisoned metadata, mass distribution of malicious artifacts
+*** Detection / Response
+**** Controls: Integrity checksums, signed indices, anomaly detection on package metadata, incident playbook, immutable backups
+@endmindmap

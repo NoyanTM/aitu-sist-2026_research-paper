@@ -1,0 +1,48 @@
+@startuml
+!include flowchart_styles.puml
+
+start
+declare("scope_of_work: dictionary\n\
+threats: list\n\
+countermeasures_mitigations: list\n\
+requirements: list")
+
+while ((approval of stakeholders / project management)) is (true)
+  input("requirements")
+  note right: functional and non-functional
+  process("Create or get draft of system architecture")
+  process("Decompose system to components")
+  process("Determine assets, entry points, trust boundaries")
+  process("Draw Data Flow Diagram (DFD)\n\
+  on different levels depending on scope of work")
+  note right
+    level 0: system as one component and actors
+    level 1+: specific features and processes
+    (not whole system, because too many details)
+  end note  
+
+  process("Identify any potential threats / weak points")
+  process("Classify / determine threats with threat model")
+  note right: e.g., STRIDE, DREAD, PASTA, MITRE ATT&CK, etc.
+  process("Determine countermeasures and mitigation")
+  note right: e.g., accept, eliminate, mitigate, transfer, etc.
+  process("Design possible kill chain / attack tree\n\
+  in order to prove assumptions and decisions")
+  process("Assessments of results\n\
+  and document all materials in the report")
+  output("Security report")
+  process("Give the report to advisor / stakeholders / management\n\
+  for validation feedback loop and review")
+  note right: in paper or digital formats
+  process("Wait for response")
+  
+  if ((no new requirements)\nAND (no edits)) then (true)
+    process("is_approved = true")
+    break
+  else (false)
+    output("Still need new changes and edits")
+  endif
+endwhile (false)
+
+stop
+@enduml

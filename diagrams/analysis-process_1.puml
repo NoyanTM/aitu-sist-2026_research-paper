@@ -1,0 +1,55 @@
+1. Data collection from indexes / repositories / registries
+- 
+primary sources (hosting platforms):
+- PyPI, JFrog, Docker Registry, Github, ...
+
+secondary sources (aggregators):
+- https://repology.org/
+- https://docs.softwareheritage.org/
+- ...
+
+*notes: 
+1. such sources are not static, they are constantly changing (in form of CRUD and other changes).
+	- it may be more appropriate to monitor
+changes in dynamic by identifying
+hotspots and potential threats in advance,
+rather that only relying on static state
+2. For now, будет только сбор metadata of packages (in more general "artifacts"), not files and data.
+	- скачивать только определенную часть (по времени (за год), топ N, some specific snapshot or dump, ...)
+	- делать загрузку в lazy формате (только по необходимости или когда пользователь делает определенный запрос)
+
+' -----------------------------------------
+
+Data management and storage
+
+NoSQL databases (for metadata)
+- graph databases (arangodb, neo4j, ...)
+
+Version control system and object / blob storage (for source files)
+- git-lfs, dvc, ...
+
+TODO: расписать data structures собираемых данных на примере PyPI
+
+' -----------------------------------------
+Анализ и обработка данных (взависимости от различных источников и форматов данных)
+1. Примение подходов natural language processing для поиска пакетов, которые пытаются имитировать / маскироваться под более популярные и официальные чтобы запутать пользователя и произвести атаку due to human factor
+
+    misspelling (matplotlib -> motplotlib)
+    похожего или идентичного описания (базовая текстовка, документация, ссылки, или даже могут хостить материалы на схожем домене для выдачи в SEO поиске)
+    ...
+2.   Формальная верификации систем (кода, ПО, и т.д.) с визуализацией
+компонентов, языковые модели для анализа кода и описания пакетов, также
+парсинг (tree-sitter, ast stdlib), анализ компонентов и всего кода с
+помощью графов - visual analyzer and (class
+ImportVisitor(ast.NodeVisitor))
+
+' ---------------------------------------
+Информационная платформа / система (для полного цикла индексации)
+
+Составить собственный индекс пакетов с рейтингом или баллами (e.g., пакеты которые появились день назад понижаются в рейтинге, или те которые существуют дольше имеют больше баллов но еще должен быть показатель риска для слишком популярных пакетов). По сути можно развить в платформу и тулкит полного цикла dependency management. like sonarqube, merlyai, etc.
+
+networkx (для графовых алгоритмов поиска, оптимизаций), машинное обучение
+Создание GNN и embeddings для anomaly detection среди кластеров пакетов:
+поиск аномальные цепочки и связи (e.g., слишком кучные, слишком длинные
+цепочки, те которые ссылаются на определенные не безопасные из
+известных CVE баз данных или которые часто становятся не безопасными)
