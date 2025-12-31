@@ -1,7 +1,5 @@
-# Reference: https://github.com/kevoreilly/CAPEv2/issues/617
-
-# LTS Ubuntu as base image
-FROM ubuntu:24.04
+# ubuntu lts version as base image
+FROM ubuntu:24.04 
 
 RUN apt update && sudo apt upgrade -y
 

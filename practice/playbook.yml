@@ -1,0 +1,167 @@
+# References:
+# https://capev2.readthedocs.io/en/latest/installation/guest
+
+- hosts: win10_guest
+  vars:
+    pillow_version: 9.5.0
+    cpython_version: 3.11.9
+    python_path: C:\Program Files (x86)\Python311-32\python.exe
+    pythonw_path: C:\Program Files (x86)\Python311-32\pythonw.exe
+    target_os_family: Windows
+  gather_facts: true
+  tasks:
+    - name: The target OS must be from Windows family
+      ansible.builtin.assert:
+        that: 
+          - "ansible_facts['os_family'] == target_os_family"
+          # optionally, can be added condition(s) to check OS version that
+          # must be any Windows 10+ but less than latest
+        fail_msg: "Target OS validation failed: Expected '{{ target_os_family }}', but found '{{ ansible_facts['os_family'] }}' instead."
+        success_msg: "Target OS validation successful: The host is a '{{ target_os_family }}' system."
+
+    # other variants such as "C:\Temp" or "C:\Windows\Temp\" are not so reliable
+    - name: Create temporary directory for setup of the guest
+      ansible.windows.win_tempfile:
+        state: directory
+        suffix: capev2-guest
+      register: tmp_dir
+    
+    # ansible.builtin.package_facts, community.general.pip_package_info, community.general.python_requirements_info are not compatible with Windows
+    # due to "Module result deserialization failed: No start of json char found See stdout/stderr for the returned output"
+    - name: Check if Python is already installed
+      ansible.windows.win_command: python --version
+      register: python_version
+      failed_when: false
+      changed_when: false
+      ignore_errors: true
+    
+    # if not found or contains error, then go to download python (is_python_available: false)
+    # if found and valid output, then skip up to pip upgrade (is_python_available: true)
+    - name: Set 'is_python_available' by parsing 'python_version' according to satisfiable requirements
+      ansible.builtin.set_fact:
+        is_python_available: >-
+          {{ 
+            python_version.rc == 0 and
+            (python_version.stderr is none or python_version.stderr | length == 0) and
+            python_version.stdout is search('Python ' ~ cpython_version)
+          }}
+    
+    - name: Attempt to download Python
+      block:
+        - name: Download Python from external source (e.g., python.org)
+          ansible.windows.win_get_url:
+            url: "https://www.python.org/ftp/python/{{ cpython_version }}/python-{{ cpython_version }}.exe"
+            dest: "{{ tmp_dir.path }}\\python-{{ cpython_version }}.exe"
+      rescue:
+        - name: Fallback to available installer from other source (e.g., local repository or file system)
+          ansible.windows.win_copy:
+            src: "{{ playbook_dir }}/files/python-{{ cpython_version }}.exe"
+            dest: "{{ tmp_dir.path }}\\python-{{ cpython_version }}.exe"
+          register: download_python_fallback
+          ignore_errors: true
+        - name: Fail if fallback is not available or unexpected issues occurred
+          ansible.builtin.fail:
+            msg: "Fallback installer is not locally available"
+          when: download_python_fallback.failed == true
+      when: is_python_available == false
+    
+    # reference: https://docs.python.org/3.11/using/windows.html
+    # @TODO: specify product_id like "product_id: python-3.11.9"?
+    # @TODO: what exact type of administrator privileges it requires (become_user: Administrator or System)? 
+    - name: Install Python from the executable
+      ansible.windows.win_package:
+        path: "{{ tmp_dir.path }}\\python-{{ cpython_version }}.exe"
+        checksum: af19e5e2f03e715a822181f2cb7d4efef4eda13fa4a2db6da12e998e46f5cbf9
+        checksum_algorithm: sha256
+        arguments:
+          - /quiet
+          - InstallAllUsers=1
+          - PrependPath=1
+        state: present
+      become: true
+      become_method: runas
+      vars:
+        ansible_become_user: "{{ ansible_user }}"
+        ansible_become_pass: "{{ ansible_password }}"
+      when: is_python_available == false
+      register: python_installation
+
+    - name: Change 'is_python_available' to true if it is installed correctly
+      ansible.builtin.set_fact:
+        is_python_available: true
+      when: is_python_available == false and python_installation.rc == 0
+
+    # ansible.builtin.pip is not compatible with Windows
+    - name: Upgrade pip to the latest version
+      ansible.windows.win_command: '"{{ python_path }}" -m pip install --upgrade pip'
+    
+    # reference: https://pillow.readthedocs.io/en/stable/installation/python-support.html
+    # @TODO: check if pillow is installed in "pip list" after that task or no error during download
+    - name: Install Pillow globally
+      ansible.windows.win_command: '"{{ python_path }}" -m pip install Pillow=={{ pillow_version }}'
+
+    - name: Create directory for agent.pyw
+      ansible.windows.win_file:
+        path: C:\capev2
+        state: directory
+
+    # @TODO: clone from their official git repository
+    # as shallow clone then after try to copy
+    - name: Copy agent.pyw from the host to the guest
+      ansible.windows.win_copy:
+        src: "{{ playbook_dir }}/files/agent.pyw"
+        dest: C:\capev2\agent.pyw
+
+    # @TODO: check existing one task by unique id (not only by unique name)
+    - name: Start agent.pyw as scheduled task
+      community.windows.win_scheduled_task:
+        name: agent.pyw
+        actions:
+          - path: "{{ pythonw_path }}"
+            arguments: 'C:\capev2\agent.pyw'
+            working_directory: 'C:\capev2'
+        triggers:
+          - type: boot
+          # - type: logon
+        username: SYSTEM
+        state: present
+        run_level: highest
+        enabled: true
+
+    - name: Reboot system to activate scheduled task of agent.pyw
+      ansible.windows.win_reboot:
+        msg: "Reboot initiated to activate scheduled task"
+        connect_timeout: 10.0
+        reboot_timeout: 900
+        post_reboot_delay: 60
+        test_command: whoami
+
+    - name: Disable Windows Firewall
+      ansible.windows.win_firewall:
+        state: disabled
+        profiles:
+        - Domain
+        - Private
+        - Public
+
+    - name: Reset the session of connection to check connectivity
+      ansible.builtin.meta: reset_connection
+
+    # @TODO: instead check if task and process started by win_scheduled_task_stat
+    # by waiting for N time (e.g., 30 seconds)
+    - name: Check if agent.pyw is running
+      ansible.builtin.uri:
+        url: "http://{{ ansible_host }}:{{ http_port | default(8000) }}"
+        method: GET
+        status_code: 200
+        body_format: json
+        return_content: true
+      delegate_to: 127.0.0.1
+      register: agent_response
+      until: agent_response.status == 200
+      retries: 10
+      delay: 10
+    
+    - name: Debug response from the agent
+      ansible.builtin.debug:
+        msg: "{{ agent_response }}"

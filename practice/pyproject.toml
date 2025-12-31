@@ -1,0 +1,14 @@
+[project]
+name = "practice"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "ansible>=13.2.0",
+]
+
+[dependency-groups]
+lint = [
+    "ansible-lint>=25.12.2",
+]
