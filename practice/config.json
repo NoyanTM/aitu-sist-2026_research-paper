@@ -1,0 +1,24 @@
+{
+    "random_seed": 42,
+    "model": 2,
+    "boot": {},
+    "num_developers": 300,
+    "num_threat_actors": 5,
+    "num_publishers": 30,
+    "num_administrators": 5,
+    "max_packages": 500,
+    "max_packages_per_publisher": 20,
+    "max_package_versions": 9,
+    "max_steps": 365,
+    "max_iterations": 100,
+    "developer_actions": {
+        "check_state": 45,
+        "install_package": 20,
+        "change_package": 30,
+        "remove_package": 5
+    },
+    "publisher_actions": {
+        "publish_package": 25,
+        "update_package": 75
+    }
+}
