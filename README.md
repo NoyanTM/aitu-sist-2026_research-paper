@@ -18,7 +18,7 @@ Research paper for [AITU SIST 2026 Conference](https://sist.astanait.edu.kz/)
 
 ## Use of AI tools
 We used Gemini services from Google and hosted local models from Hugging Face via the llama-cpp inference engine for specific limited tasks:
-- Language processing for editing (e.g., rewrites and grammar mistakes) and translating text into English from other languages (both Kazakh and Russian).
-- Searching for supply materials and aggregating unstructured data (excluding analysis, selection, or synthesis).
-- Temporary vibe-coded sections are marked with the @AI_GENERATED_EXPERIMENTAL comment, which are limited to auxiliary components, such as data collection scripts and chart visualizations.
+- Language processing for editing (e.g., rewrites and grammar mistakes) and translating text into English from other languages (e.g., Kazakh and Russian).
+- Searching for supplementary materials and aggregating unstructured data (excluding analysis, selection, or synthesis).
+- Temporary vibe-coded sections are marked with the @AI_GENERATED_EXPERIMENTAL comment, which are limited to utility components, such as data collection scripts and chart visualizations.
 - All other research, analysis, and development were performed personally using external references, original methods, and the help of mentors.
