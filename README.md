@@ -9,7 +9,7 @@ Research paper for [AITU SIST 2026 Conference](https://sist.astanait.edu.kz/)
 ## Requirements
 - Used software: drawio (.drawio), libreoffice (.odt), zotero (.bib), python (.py).
 - /figures are built from /paper/diagrams.drawio.
-- /paper contains latest attached paper and presentation.
+- /paper contains latest attached paper (with @NOTE/@TODO comments in .odt file) and presentation.
 - /practice contains a practical part that are related to discrete event simulation to represent how our preventive quality gate can help PyPI ecosystem in dynamics with additional web visualizations and gamifications.
 
 ## Contributions
